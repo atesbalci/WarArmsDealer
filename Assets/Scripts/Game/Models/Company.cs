@@ -14,15 +14,21 @@ namespace Game.Models
         public override void Tick()
         {
             base.Tick();
-            foreach (var research in ActiveResearches)
+            for (var i = 0; i < ActiveResearches.Count; i++)
             {
+                var research = ActiveResearches[i];
                 research.Tick();
+                if (research.RemainingTicks <= 0)
+                {
+                    ActiveResearches.RemoveAt(i);
+                    i--;
+                }
             }
         }
 
         public void AddResearch(Research research)
         {
-
+            ActiveResearches.Add(new ResearchActivity(research));
         }
     }
 }

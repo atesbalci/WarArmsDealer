@@ -1,6 +1,6 @@
 ﻿namespace Game.Models
 {
-    public class Research
+    public class Research : ModelBase
     {
 
     }

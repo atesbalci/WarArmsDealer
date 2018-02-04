@@ -21,7 +21,8 @@ namespace Game.Models
         {
             base.Tick();
             RemainingTicks--;
-            MessageManager.Send(new ResearchCompleteEvent { ResearchActivity = this });
+            if (RemainingTicks <= 0)
+                MessageManager.Send(new ResearchCompleteEvent {ResearchActivity = this});
         }
     }
 }
