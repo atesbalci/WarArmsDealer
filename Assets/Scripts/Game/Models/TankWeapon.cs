@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Models {
-    public class TankWeapon : WeaponBase {
+    public class TankWeapon : Weapon {
         public ArmorStat ArmorStat { get; set; }
     }
 }

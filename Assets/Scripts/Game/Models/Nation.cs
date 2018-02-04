@@ -13,7 +13,7 @@ namespace Game.Models
         public TankWeapon CurrentTank;
         public ArtilleryWeapon CurrentArtillery;
 
-        public WeaponBase[] Weapons;
+        public Weapon[] Weapons;
 
 
 

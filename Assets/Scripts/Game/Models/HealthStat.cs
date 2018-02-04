@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Models {
-    public class HealthStat : BaseStat {
+    public class HealthStat : Stat {
 
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Models {
-    public class PiercingStat : BaseStat {
+    public class PiercingStat : Stat {
 
     }
 }

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace  Game.Models {
-    public class ArtilleryWeapon : WeaponBase {
+    public class ArtilleryWeapon : Weapon {
         public PiercingStat PiercingStat { get; set; }
     }
 }
-

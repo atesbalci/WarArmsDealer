@@ -2,7 +2,7 @@
 {
     public class Research : ModelBase
     {
-        public WeaponBase Weapon { get; set; }
+        public Weapon Weapon { get; set; }
 
         //TODO Ates: Implement this
         public int CalculateDuration()
