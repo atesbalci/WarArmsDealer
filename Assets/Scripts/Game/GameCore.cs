@@ -8,26 +8,29 @@ namespace Game
         public const float TickFrequency = 1f;
         public float CombatWidth { get {return 10f + Mathf.Log10(_tickCount+10); } }
 
-        int _tickCount;
+        //Progress -100 means Nation0 lost, Progress 100 means Nation1 lost
+        public float WarProgress { get { return nation0.Manpower / (nation0.Manpower + nation1.Manpower)*200f-100f; } }
 
+        int _tickCount;
+        Nation nation0;
+        Nation nation1;
 
         private float _timer;
 
         private void Awake() {
-            Nation soviets = new Nation("Soviets");
-            Nation naizs = new Nation("Nazis");
+            Nation soviets = nation0 = new Nation("Soviets");
+            Nation naizs = nation1 = new Nation("Nazis");
 
             WarSim sim = new WarSim(soviets, naizs);
 
 
-
+            Debug.Log("Progress:" + WarProgress);
             for (int i = 0; i < 10; i++)
                 sim.SimulateBattle(CombatWidth);
+            Debug.Log("Progress:" + WarProgress);
         
         }
         
-        
-
         private void Update()
         {
 
@@ -43,7 +46,7 @@ namespace Game
 
         private void Tick()
         {
-
+            
         }
 
         

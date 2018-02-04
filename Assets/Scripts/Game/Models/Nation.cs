@@ -22,7 +22,7 @@
             Weapons[1] = CurrentTank;
             Weapons[2] = CurrentArtillery;
 
-            Manpower = 1000;
+            Manpower = 10000;
         }
 
         public Nation(string name) {
@@ -36,7 +36,7 @@
             Weapons[1] = CurrentTank;
             Weapons[2] = CurrentArtillery;
 
-            Manpower = 1000;
+            Manpower = 10000;
 
             Name = name;
         }
