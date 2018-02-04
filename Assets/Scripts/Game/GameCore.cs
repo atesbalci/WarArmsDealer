@@ -6,6 +6,10 @@ namespace Game
     public class GameCore : MonoBehaviour
     {
         public const float TickFrequency = 1f;
+        public float CombatWidth { get {return 10f + Mathf.Log10(_tickCount+10); } }
+
+        int _tickCount;
+
 
         private float _timer;
 
@@ -15,17 +19,25 @@ namespace Game
 
             WarSim sim = new WarSim(soviets, naizs);
 
+
+
             for (int i = 0; i < 10; i++)
-                sim.SimulateBattle();
+                sim.SimulateBattle(CombatWidth);
+        
         }
         
+        
+
         private void Update()
         {
+
             _timer += Time.deltaTime;
             if (_timer >= TickFrequency)
             {
                 _timer -= TickFrequency;
+
                 Tick();
+                _tickCount++;
             }
         }
 
@@ -33,5 +45,7 @@ namespace Game
         {
 
         }
+
+        
     }
 }
