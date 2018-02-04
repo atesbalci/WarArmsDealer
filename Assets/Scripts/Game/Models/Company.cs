@@ -7,13 +7,14 @@ namespace Game.Models
         public List<ResearchActivity> ActiveResearches { get; private set; }
         public List<DesignActivity> ActiveDesigns { get; private set; }
         public List<Weapon> DesignedWeapons;
-
+        public Technology Tech { get; set; }
 
         public Company()
         {
             ActiveResearches = new List<ResearchActivity>();
             ActiveDesigns = new List<DesignActivity>();
             DesignedWeapons = new List<Weapon>();
+            Tech = new Technology();
         }
 
         public override void Tick()

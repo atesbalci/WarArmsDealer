@@ -4,7 +4,7 @@
     {
         public Weapon Weapon { get; set; }
 
-        //TODO Ates: Implement this
+        //TODO Anyone: Implement this (please) (I couldn't decide)
         public int CalculateDuration()
         {
             return 0;

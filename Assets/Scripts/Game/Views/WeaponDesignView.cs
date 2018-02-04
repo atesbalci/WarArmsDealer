@@ -9,13 +9,27 @@ namespace Game.Views
     public class WeaponDesignView : MonoBehaviour
     {
         public Transform StatsParent;
+        public Text Header;
+        public Button ConfirmButton;
+
+        [Space(10)]
         public GameObject StatsTemplate;
 
         private Company _company;
+        private List<StatElement> _curStats;
 
         public void Bind(Company company)
         {
             _company = company;
+            ConfirmButton.onClick.AddListener(() =>
+            {
+                if(_curStats == null)
+                    return;
+                foreach (var stat in _curStats)
+                {
+                    stat.Stat.Value = stat.Value;
+                }
+            });
         }
 
         public void Show(Weapon newProject)
@@ -38,15 +52,35 @@ namespace Game.Views
                     Destroy(child.gameObject);
                 }
             }
+            _curStats = new List<StatElement>();
             foreach (var stat in stats)
             {
                 var statView = Instantiate(StatsTemplate, StatsParent, false).transform;
                 statView.Find("Text").GetComponent<Text>().text = stat.Item2;
                 var slider = statView.GetComponentInChildren<Slider>();
                 slider.value = 0f;
+                slider.maxValue = _company.Tech[stat.Item1.Type];
                 var valueText = statView.Find("Value").GetComponent<Text>();
-                //TODO Ates: Continue
+                var statEle = new StatElement
+                {
+                    Stat = stat.Item1,
+                    Value = 0
+                };
+                slider.onValueChanged.AddListener(fl =>
+                {
+                    var val = Mathf.RoundToInt(fl);
+                    valueText.text = val.ToString();
+                    statEle.Value = val;
+                });
+                _curStats.Add(statEle);
+                statView.gameObject.SetActive(true);
             }
+        }
+
+        private struct StatElement
+        {
+            public Stat Stat { get; set; }
+            public int Value { get; set; }
         }
     }
 }
