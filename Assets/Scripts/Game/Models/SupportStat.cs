@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Game.Models {
+﻿namespace Game.Models {
     public class SupportStat : Stat {
-
+        public SupportStat() {
+            Value = 1;
+        }
     }
 }

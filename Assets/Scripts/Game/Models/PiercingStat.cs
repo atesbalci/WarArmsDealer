@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Game.Models {
+﻿namespace Game.Models {
     public class PiercingStat : Stat {
-
+        public PiercingStat() {
+            Value = 1;
+        }
     }
 }

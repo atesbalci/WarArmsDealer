@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Models
 {
@@ -22,39 +20,34 @@ namespace Game.Models
             float rightHealth = 0f;
             float rightAttack = 0f;
 
-
             for (int i=0;i<3;i++)
             {
                 leftHealth += _nations[0].Weapons[i].HealthStat.Value;
                 rightHealth += _nations[1].Weapons[i].HealthStat.Value;
                 leftAttack += _nations[0].Weapons[i].HealthStat.Value;
                 rightAttack += _nations[1].Weapons[i].HealthStat.Value;
-
             }
 
- 
-
-
-            float leftArmorWest=Mathf.Max(0f,_nations[0].CurrentTank.ArmorStat.Value - _nations[1].CurrentArtillery.PiercingStat.Value);
+            float leftArmorWest = Mathf.Max(0f,_nations[0].CurrentTank.ArmorStat.Value - _nations[1].CurrentArtillery.PiercingStat.Value);
             float leftArmorEast = Mathf.Max(0f, _nations[1].CurrentTank.ArmorStat.Value - _nations[0].CurrentArtillery.PiercingStat.Value);
+
             while (leftHealth > 0f || rightHealth > 0f)
             {
-                leftHealth -= rightAttack + leftArmorWest;
-                rightHealth -= leftAttack + leftArmorEast;
+                leftHealth -= rightAttack + Random.Range(0, 2) + leftArmorWest;
+                rightHealth -= leftAttack + Random.Range(0, 2) + leftArmorEast;
             }
+
             Debug.Log("Battle is over");
+
             if(leftHealth>rightHealth)
             {
-                Debug.Log("Left has won");
+                Debug.Log("<color=red>"+ _nations[0].Name + "</color> has won");
             }
             else
             {
-                Debug.Log("Right has won");
+                Debug.Log("<color=red>" + _nations[1].Name + "</color> has won");
             }
-
         }
-
-
     }
 }
 

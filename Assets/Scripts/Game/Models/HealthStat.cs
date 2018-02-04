@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace Game.Models {
     public class HealthStat : Stat {
-
+        public HealthStat() {
+            Value = 1;
+        }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Game.Models
+﻿namespace Game.Models
 {
     public class Nation : ModelBase
     {
@@ -15,7 +11,34 @@ namespace Game.Models
 
         public Weapon[] Weapons;
 
+        public Nation() {
+            CurrentInfantry = new InfantryWeapon();
+            CurrentTank = new TankWeapon();
+            CurrentArtillery = new ArtilleryWeapon();
 
+            Weapons = new Weapon[3];
 
+            Weapons[0] = CurrentInfantry;
+            Weapons[1] = CurrentTank;
+            Weapons[2] = CurrentArtillery;
+
+            Manpower = 1000;
+        }
+
+        public Nation(string name) {
+            CurrentInfantry = new InfantryWeapon();
+            CurrentTank = new TankWeapon();
+            CurrentArtillery = new ArtilleryWeapon();
+
+            Weapons = new Weapon[3];
+
+            Weapons[0] = CurrentInfantry;
+            Weapons[1] = CurrentTank;
+            Weapons[2] = CurrentArtillery;
+
+            Manpower = 1000;
+
+            Name = name;
+        }
     }
 }

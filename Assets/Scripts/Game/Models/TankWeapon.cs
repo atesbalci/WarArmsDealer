@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Game.Models {
+﻿namespace Game.Models {
     public class TankWeapon : Weapon {
         public ArmorStat ArmorStat { get; set; }
+
+        public TankWeapon() {
+            this.ArmorStat = new ArmorStat();
+        }
     }
 }
 
