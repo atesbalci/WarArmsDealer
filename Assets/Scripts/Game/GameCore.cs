@@ -14,13 +14,13 @@ namespace Game
         int _tickCount;
         Nation nation0;
         Nation nation1;
-
+        private Company _playerCompany = new Company();
         private float _timer;
 
         private void Awake() {
             Nation soviets = nation0 = new Nation("Soviets");
             Nation naizs = nation1 = new Nation("Nazis");
-
+            
             WarSim sim = new WarSim(soviets, naizs);
 
 
@@ -28,6 +28,8 @@ namespace Game
             for (int i = 0; i < 10; i++)
                 sim.SimulateBattle(CombatWidth);
             Debug.Log("Progress:" + WarProgress);
+
+            _playerCompany.CompanyDesigns.CreateDesignActivity(new Weapon());
         
         }
         
@@ -46,7 +48,7 @@ namespace Game
 
         private void Tick()
         {
-            
+            _playerCompany.Tick();
         }
 
         
