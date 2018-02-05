@@ -1,34 +1,47 @@
 ﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.Models
 {
-    public enum StatType : uint { }
-
     public class Technology : ModelBase
     {
         private const int DefaultTechLevel = 3;
 
-        private readonly int[] _levels;
+        public List<Research> Researches;
+        public Weapon[] Weapons;
 
         public Technology()
         {
             var statCnt = Enum.GetValues(typeof(StatType)).Length;
-            _levels = new int[statCnt];
-            for (var i = 0; i < statCnt; i++)
-            {
-                _levels[i] = DefaultTechLevel;
-            }
+
+            Weapons = new Weapon[System.Enum.GetNames(typeof(WeaponType)).Length];
+
+            Weapons[0] = new InfantryWeapon(new KeyValuePair<StatType, int>[3] {
+                new KeyValuePair<StatType, int>(StatType.Attack, DefaultTechLevel)
+                ,new KeyValuePair<StatType, int>(StatType.Health, DefaultTechLevel)
+                ,new KeyValuePair<StatType, int>(StatType.Support, DefaultTechLevel)});
+
+            Weapons[1] = new TankWeapon(new KeyValuePair<StatType, int>[3] {
+                new KeyValuePair<StatType, int>(StatType.Attack, DefaultTechLevel)
+                ,new KeyValuePair<StatType, int>(StatType.Health, DefaultTechLevel)
+                ,new KeyValuePair<StatType, int>(StatType.Armor, DefaultTechLevel)});
+
+            Weapons[2] = new ArtilleryWeapon(new KeyValuePair<StatType, int>[3] {
+                new KeyValuePair<StatType, int>(StatType.Attack, DefaultTechLevel)
+                ,new KeyValuePair<StatType, int>(StatType.Health, DefaultTechLevel)
+                ,new KeyValuePair<StatType, int>(StatType.Piercing, DefaultTechLevel)});
+
+            Researches = new List<Research>();
         }
 
-        /// <summary>
-        /// Getter/Setter for Tech
-        /// </summary>
-        /// <param name="stat">Stat type</param>
-        /// <returns>Tech level for given stat type</returns>
-        public int this[StatType stat]
-        {
-            get { return _levels[(int)stat]; }
-            set { _levels[(int)stat] = value; }
+        public void AddResearch(Research research) {
+            Researches.Add(research);
+
+            for (int i = 0; i < research.Weapon.Stats.Length; i++) {
+                Weapons[(int) research.Weapon.Type].Stats[i].Value
+                    = Mathf.Max(Weapons[(int) research.Weapon.Type].Stats[i].Value, research.Weapon.Stats[i].Value);
+            }
         }
     }
 }

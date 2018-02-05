@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Game.Models {
+﻿namespace Game.Models {
+    [Stat("Health")]
     public class HealthStat : Stat {
         public HealthStat() {
             Value = 1;
+            Type = StatType.Health;
         }
     }
 }

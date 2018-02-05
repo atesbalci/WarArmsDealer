@@ -1,14 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 namespace  Game.Models {
     public class ArtilleryWeapon : Weapon {
-        [Stat("Piercing")]
-        public PiercingStat PiercingStat { get; set; }
-
         public ArtilleryWeapon() {
-            this.PiercingStat = new PiercingStat();
+            Stats[(int) StatType.Piercing].Value = 1;
+
+            Type = WeaponType.Artillery;
+        }
+
+        /// <summary>
+        /// Pass any amount of stat as KeyValuePair
+        /// </summary>
+        /// <param name="keyValuePair"></param>
+        public ArtilleryWeapon(KeyValuePair<StatType,int>[] keyValuePair) {
+            foreach (var t in keyValuePair) {
+                Stats[(int) t.Key].Value = t.Value;
+            }
+
+            Type = WeaponType.Artillery;
         }
     }
 }

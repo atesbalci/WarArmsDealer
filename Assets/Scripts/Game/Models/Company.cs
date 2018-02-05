@@ -8,6 +8,7 @@ namespace Game.Models
         public List<DesignActivity> ActiveDesigns { get; private set; }
         public List<Weapon> DesignedWeapons;
         public Technology Tech { get; set; }
+        public string Name;
 
         public Company()
         {
@@ -15,6 +16,15 @@ namespace Game.Models
             ActiveDesigns = new List<DesignActivity>();
             DesignedWeapons = new List<Weapon>();
             Tech = new Technology();
+        }
+
+        public Company(string p_Name) {
+            ActiveResearches = new List<ResearchActivity>();
+            ActiveDesigns = new List<DesignActivity>();
+            DesignedWeapons = new List<Weapon>();
+            Tech = new Technology();
+
+            Name = p_Name;
         }
 
         public override void Tick()

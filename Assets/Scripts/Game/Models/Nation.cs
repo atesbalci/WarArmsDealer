@@ -3,7 +3,12 @@
     public class Nation : ModelBase
     {
         public string Name { get; set; }
-        public float Manpower { get; set; }
+
+        public float Manpower {
+            get { return _manpower; }
+            set { _manpower = value >= 0 ? value : 0; }
+        }
+        private float _manpower;
 
         public InfantryWeapon CurrentInfantry;
         public TankWeapon CurrentTank;
