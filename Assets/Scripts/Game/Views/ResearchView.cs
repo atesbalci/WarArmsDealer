@@ -6,22 +6,26 @@ using System;
 
 namespace Game.Views {
     public class ResearchView : ViewBase {
-        public GameObject NewResearchPanel;
 
-        public List<ResearchActivity> CurrentResearchActivities;
+        public GameObject NewResearchPanel;
+        public ResearchItemView ResearchItemView;
 
         private Company _company;
 
         public void Bind(Company p_Company) {
-            CurrentResearchActivities = new List<ResearchActivity>();
-
             _company = p_Company;
 
-            SetUiText();
-        }
+            ResearchItemView temp = Instantiate(ResearchItemView, NewResearchPanel.transform, false);
+            temp.Bind(new InfantryWeapon());
+            temp.gameObject.SetActive(true);
 
-        private void SetUiText() {
+            ResearchItemView temp1 = Instantiate(ResearchItemView, NewResearchPanel.transform, false);
+            temp1.Bind(new TankWeapon());
+            temp1.gameObject.SetActive(true);
 
+            ResearchItemView temp2 = Instantiate(ResearchItemView, NewResearchPanel.transform, false);
+            temp2.Bind(new ArtilleryWeapon());
+            temp2.gameObject.SetActive(true);
         }
     }
 }
