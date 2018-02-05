@@ -11,6 +11,7 @@ namespace Game.Models
         public Technology Tech { get; set; }
         public Design CompanyDesigns;
         public string Name;
+        public float Money;
 
 
         public Company()
@@ -20,6 +21,7 @@ namespace Game.Models
             ActiveDesigns = new List<DesignActivity>();
             DesignedWeapons = new List<Weapon>();
             Tech = new Technology();
+            Money = 1000f;
         }
 
         public Company(string p_Name) {
