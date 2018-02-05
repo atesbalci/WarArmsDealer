@@ -16,7 +16,7 @@ namespace Utils
         /// Sends an event
         /// </summary>
         /// <param name="ev">Event to be sent</param>
-        public static void Send(WEvent ev)
+        public static void Send<T>(T ev) where T : WEvent
         {
             MessageBroker.Default.Publish(ev);
         }
