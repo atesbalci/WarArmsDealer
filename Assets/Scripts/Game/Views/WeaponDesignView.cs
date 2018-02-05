@@ -10,7 +10,7 @@ namespace Game.Views
     {
         public Transform StatsParent;
         public Text Header;
-        public Button SellToLeftButton, SellToRightButton;
+        public Button SellToLeftButton, CreateDesignButton;
         public Text DesignCostText;
         [Space(10)]
         public GameObject StatsTemplate;
@@ -25,7 +25,7 @@ namespace Game.Views
             _nation0 = nation0;
             _nation1 = nation1;
 
-            SellToRightButton.onClick.AddListener(() => 
+            CreateDesignButton.onClick.AddListener(() => 
             {
                 if (_curStats == null)
                     return;
@@ -105,11 +105,19 @@ namespace Game.Views
                             new KeyValuePair<StatType, int>(StatType.Health, _curStats[1].Value),
                             new KeyValuePair<StatType, int>(StatType.Support, _curStats[2].Value)
                         });
-            DesignCostText.text = "Duration: " + newDesign.GetCost() +
-                        "\nCost: " + newDesign.GetDuration();
+            if(!Conditions.CanDesign(newDesign, _company))
+            {
+                CreateDesignButton.interactable = true;
+            }
+            else
+            {
+                CreateDesignButton.interactable = true;
+            }
+            DesignCostText.text = "Duration: " + newDesign.GetDuration() +
+                        "\nCost: " + newDesign.GetCost();
         }
 
-        private struct StatElement
+        private class StatElement
         {
             public Stat Stat { get; set; }
             public int Value { get; set; }

@@ -61,7 +61,7 @@ namespace Game.Models {
                 default:
                     break;
             }
-            return cost * 100f;
+            return cost * 250f;
         }
 
         /// <inheritdoc />
