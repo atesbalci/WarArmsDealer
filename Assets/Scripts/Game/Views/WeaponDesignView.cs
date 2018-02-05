@@ -99,6 +99,8 @@ namespace Game.Views
                         statEle.Value = val;
                     });
                     _curStats.Add(statEle);
+
+
                     statView.gameObject.SetActive(true);
                 }
             }

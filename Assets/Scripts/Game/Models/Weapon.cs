@@ -35,6 +35,27 @@ namespace Game.Models {
             Stats[(int) StatType.Support].Value = 0;
 
             Type = WeaponType.Infantry;
+
+            
+        }
+        public float GetCost()
+        {
+            float cost = 0f;
+            switch (Type)
+            {
+                case WeaponType.Infantry:
+                    cost += Stats[(int)StatType.Attack].Value + Stats[(int)StatType.Health].Value + Stats[(int)StatType.Support].Value;
+                    break;
+                case WeaponType.Tank:
+                    cost += Stats[(int)StatType.Attack].Value + Stats[(int)StatType.Health].Value + Stats[(int)StatType.Armor].Value;
+                    break;
+                case WeaponType.Artillery:
+                    cost += Stats[(int)StatType.Attack].Value + Stats[(int)StatType.Health].Value + Stats[(int)StatType.Piercing].Value;
+                    break;
+                default:
+                    break;
+            }
+            return cost * 1000f;
         }
     }
 }

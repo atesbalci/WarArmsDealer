@@ -29,6 +29,7 @@ namespace Game
             _sim = new WarSim(_nation0, _nation1);
 
             GameView.Bind(_nation0, _nation1, new Company("Bokcuklar Inc."));
+            GameView.UpdateCompanyState(_tickCount);
         }
         
         private void Update()
@@ -47,7 +48,7 @@ namespace Game
         {
             _sim.SimulateBattle(CombatWidth);
             GameView.UpdateWarState(WarProgress);
-
+            GameView.UpdateCompanyState(_tickCount);
             Debug.Log(WarProgress);
         }
     }

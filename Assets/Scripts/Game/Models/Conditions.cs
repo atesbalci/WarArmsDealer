@@ -13,8 +13,9 @@ namespace Game.Models
 
         }
 
-        public static bool CanDesign(Company company)
+        public static bool CanDesign(Weapon weapon, Company company)
         {
+            bool result = false;
             return company.ActiveDesigns.Count < 2 ? true : false;
 
         }
