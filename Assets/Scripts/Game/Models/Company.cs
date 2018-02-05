@@ -25,10 +25,13 @@ namespace Game.Models
         }
 
         public Company(string p_Name) {
+            CompanyDesigns = new Design(this);
             ActiveResearches = new List<ResearchActivity>();
             ActiveDesigns = new List<DesignActivity>();
             DesignedWeapons = new List<Weapon>();
             Tech = new Technology();
+            Money = 1000f;
+
 
             Name = p_Name;
         }

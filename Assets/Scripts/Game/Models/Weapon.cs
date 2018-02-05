@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Game.Models {
 
@@ -38,6 +39,11 @@ namespace Game.Models {
 
             
         }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// Returns the design cost of a weapon
+        /// </summary>
         public float GetCost()
         {
             float cost = 0f;
@@ -55,7 +61,31 @@ namespace Game.Models {
                 default:
                     break;
             }
-            return cost * 1000f;
+            return cost * 100f;
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// Returns the design duration of a weapon
+        /// </summary>
+        public float GetDuration()
+        {
+            float duration = 0f;
+            switch (Type)
+            {
+                case WeaponType.Infantry:
+                    duration += Stats[(int)StatType.Attack].Value + Stats[(int)StatType.Health].Value + Stats[(int)StatType.Support].Value;
+                    break;
+                case WeaponType.Tank:
+                    duration += Stats[(int)StatType.Attack].Value + Stats[(int)StatType.Health].Value + Stats[(int)StatType.Armor].Value;
+                    break;
+                case WeaponType.Artillery:
+                    duration += Stats[(int)StatType.Attack].Value + Stats[(int)StatType.Health].Value + Stats[(int)StatType.Piercing].Value;
+                    break;
+                default:
+                    break;
+            }
+            return Mathf.Pow(2f, duration/3.0f);
         }
     }
 }

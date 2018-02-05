@@ -11,7 +11,7 @@ namespace Game.Views
         public Transform StatsParent;
         public Text Header;
         public Button SellToLeftButton, SellToRightButton;
-
+        public Text DesignCostText;
         [Space(10)]
         public GameObject StatsTemplate;
 
@@ -25,23 +25,23 @@ namespace Game.Views
             _nation0 = nation0;
             _nation1 = nation1;
 
-            SellToLeftButton.onClick.AddListener(() =>
-            {
-                if(_curStats == null)
-                    return;
-                foreach (var stat in _curStats)
-                {
-                    stat.Stat.Value = stat.Value;
-                }
-
-                _nation0.Weapons[(int) WeaponType.Infantry] = new InfantryWeapon(new KeyValuePair<StatType, int>[3] {
-                    new KeyValuePair<StatType, int>(StatType.Attack, _curStats[0].Value),
-                    new KeyValuePair<StatType, int>(StatType.Health, _curStats[1].Value),
-                    new KeyValuePair<StatType, int>(StatType.Support, _curStats[2].Value)
-                });
-
-                gameObject.SetActive(false);
-            });
+//             SellToLeftButton.onClick.AddListener(() =>
+//             {
+//                 if(_curStats == null)
+//                     return;
+//                 foreach (var stat in _curStats)
+//                 {
+//                     stat.Stat.Value = stat.Value;
+//                 }
+// 
+//                 _nation0.Weapons[(int) WeaponType.Infantry] = new InfantryWeapon(new KeyValuePair<StatType, int>[3] {
+//                     new KeyValuePair<StatType, int>(StatType.Attack, _curStats[0].Value),
+//                     new KeyValuePair<StatType, int>(StatType.Health, _curStats[1].Value),
+//                     new KeyValuePair<StatType, int>(StatType.Support, _curStats[2].Value)
+//                 });
+// 
+//                 gameObject.SetActive(false);
+//             });
 
             SellToRightButton.onClick.AddListener(() => 
             {
@@ -51,11 +51,13 @@ namespace Game.Views
                     stat.Stat.Value = stat.Value;
                 }
 
-                _nation1.Weapons[(int)WeaponType.Infantry] = new InfantryWeapon(new KeyValuePair<StatType, int>[3] {
+                Weapon newDesign =  new InfantryWeapon(new KeyValuePair<StatType, int>[3] {
                     new KeyValuePair<StatType, int>(StatType.Attack, _curStats[0].Value),
                     new KeyValuePair<StatType, int>(StatType.Health, _curStats[1].Value),
                     new KeyValuePair<StatType, int>(StatType.Support, _curStats[2].Value)
                 });
+
+                _company.CompanyDesigns.CreateDesignActivity(newDesign);
 
                 gameObject.SetActive(false);
             });
@@ -97,6 +99,12 @@ namespace Game.Views
                         var val = Mathf.RoundToInt(fl);
                         valueText.text = val.ToString();
                         statEle.Value = val;
+
+                        showDesign();
+                        
+                        
+
+
                     });
                     _curStats.Add(statEle);
 
@@ -104,8 +112,21 @@ namespace Game.Views
                     statView.gameObject.SetActive(true);
                 }
             }
+            
 
             StatsParent.gameObject.SetActive(true);
+        }
+
+        void showDesign()
+        {
+
+            Weapon newDesign = new InfantryWeapon(new KeyValuePair<StatType, int>[3] {
+                            new KeyValuePair<StatType, int>(StatType.Attack, _curStats[0].Value),
+                            new KeyValuePair<StatType, int>(StatType.Health, _curStats[1].Value),
+                            new KeyValuePair<StatType, int>(StatType.Support, _curStats[2].Value)
+                        });
+            DesignCostText.text = "Duration: " + newDesign.GetCost() +
+                        "\nCost: " + newDesign.GetDuration();
         }
 
         private struct StatElement
