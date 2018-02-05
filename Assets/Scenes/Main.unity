@@ -392,7 +392,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 750, y: -720.4083}
+  m_AnchoredPosition: {x: 750, y: -507.5}
   m_SizeDelta: {x: 1400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &81282728
@@ -4258,7 +4258,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 750, y: -195.08167}
+  m_AnchoredPosition: {x: 750, y: -207.5}
   m_SizeDelta: {x: 1400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1550991895
@@ -4601,7 +4601,7 @@ MonoBehaviour:
   StatsParent: {fileID: 1895305075}
   Header: {fileID: 1550991895}
   SellToLeftButton: {fileID: 0}
-  SellToRightButton: {fileID: 81282728}
+  CreateDesignButton: {fileID: 81282728}
   DesignCostText: {fileID: 1956479172}
   StatsTemplate: {fileID: 1467638036}
 --- !u!114 &1657856065
@@ -5230,10 +5230,10 @@ RectTransform:
   m_Father: {fileID: 1657856063}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1169.9952, y: -751.47235}
-  m_SizeDelta: {x: 160, y: 80}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 750, y: -772.5}
+  m_SizeDelta: {x: 1400, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1956479172
 MonoBehaviour:
