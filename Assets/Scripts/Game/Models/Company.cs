@@ -1,12 +1,10 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Game.Models
 {
     public class Company : ModelBase
     {
-        public List<ResearchActivity> ActiveResearches { get; private set; }
-        public List<DesignActivity> ActiveDesigns { get; private set; }
+        public List<Activity> Activities { get; set; }
         public List<Weapon> DesignedWeapons;
         public Technology Tech { get; set; }
         public Design CompanyDesigns;
@@ -14,14 +12,14 @@ namespace Game.Models
         public float Money;
 
 
-        public Company()
+        public Company(string name = "")
         {
             CompanyDesigns = new Design(this);
-            ActiveResearches = new List<ResearchActivity>();
-            ActiveDesigns = new List<DesignActivity>();
+            Activities = new List<Activity>();
             DesignedWeapons = new List<Weapon>();
             Tech = new Technology();
             Money = 1000f;
+<<<<<<< HEAD
         }
 
         public Company(string p_Name) {
@@ -34,30 +32,21 @@ namespace Game.Models
 
 
             Name = p_Name;
+=======
+            Name = name;
+>>>>>>> 997096acdbee376af7a6b4d8c2d08b0c1a30d51e
         }
 
         public override void Tick()
         {
             base.Tick();
-            for (var i = 0; i < ActiveResearches.Count; i++)
+            for (var i = 0; i < Activities.Count; i++)
             {
-                var research = ActiveResearches[i];
-                research.Tick();
-                if (research.RemainingTicks <= 0)
+                var activity = Activities[i];
+                activity.Tick();
+                if (activity.RemainingDuration <= 0)
                 {
-                    ActiveResearches.RemoveAt(i);
-                    i--;
-                }
-            }
-            for(var i = 0; i < ActiveDesigns.Count; i++)
-            {
-                
-                var design = ActiveDesigns[i];
-                design.Tick();
-                Debug.Log("Designing: " + design.RemainingTicks);
-                if (design.RemainingTicks <= 0)
-                {
-                    ActiveDesigns.RemoveAt(i);
+                    Activities.RemoveAt(i);
                     i--;
                 }
             }
@@ -66,12 +55,12 @@ namespace Game.Models
 
         public void AddResearch(Research research)
         {
-            ActiveResearches.Add(new ResearchActivity(research));
+            Activities.Add(new ResearchActivity(research));
         }
         [System.Obsolete("This is an obsolete method")]
         public void AddDesign(Weapon design)
         {
-            ActiveDesigns.Add(new DesignActivity(design, CompanyDesigns.BaseDesignTime));
+            Activities.Add(new DesignActivity(design, CompanyDesigns.BaseDesignTime));
         }
     }
 }

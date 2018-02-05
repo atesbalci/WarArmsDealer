@@ -7,22 +7,18 @@ namespace Game.Models
         public ResearchActivity ResearchActivity { get; set; }
     }
 
-    public class ResearchActivity : ModelBase
+    public class ResearchActivity : Activity
     {
-        public int RemainingTicks { get; set; }
         public Research Research { get; private set; }
 
-        public ResearchActivity(Research research)
+        public ResearchActivity(Research research) : base(research.CalculateDuration())
         {
             Research = research;
         }
 
-        public override void Tick()
+        protected override void ActivityComplete()
         {
-            base.Tick();
-            RemainingTicks--;
-            if (RemainingTicks <= 0)
-                MessageManager.Send(new ResearchCompleteEvent {ResearchActivity = this});
+            MessageManager.Send(new ResearchCompleteEvent {ResearchActivity = this});
         }
     }
 }

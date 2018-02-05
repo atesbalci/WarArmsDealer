@@ -1,6 +1,5 @@
 ﻿using Utils;
 using UnityEngine;
-using UniRx;
 
 namespace Game.Models
 {
@@ -9,30 +8,18 @@ namespace Game.Models
         public DesignActivity DesignActivity { get; set; }
     }
 
-    public class DesignActivity : ModelBase
+    public class DesignActivity : Activity
     {
-       
-        public int RemainingTicks { get; set; }
         public Weapon CreatedWeapon { get; private set; }
 
-        public DesignActivity(Weapon design, int designTime)
+        public DesignActivity(Weapon design, int designTime) : base(designTime)
         {
             CreatedWeapon = design;
-            RemainingTicks = designTime;
-            
         }
 
-        public override void Tick()
+        protected override void ActivityComplete()
         {
-            base.Tick();
-            RemainingTicks--;
-            
-            if (RemainingTicks <= 0)
-            {
-                Debug.Log("sending message");
-                MessageManager.Send(new DesignCompleteEvent { DesignActivity = this });
-
-            }
+            MessageManager.Send(new DesignCompleteEvent { DesignActivity = this });
         }
     }
 }
