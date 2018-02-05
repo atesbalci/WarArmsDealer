@@ -25,24 +25,6 @@ namespace Game.Views
             _nation0 = nation0;
             _nation1 = nation1;
 
-//             SellToLeftButton.onClick.AddListener(() =>
-//             {
-//                 if(_curStats == null)
-//                     return;
-//                 foreach (var stat in _curStats)
-//                 {
-//                     stat.Stat.Value = stat.Value;
-//                 }
-// 
-//                 _nation0.Weapons[(int) WeaponType.Infantry] = new InfantryWeapon(new KeyValuePair<StatType, int>[3] {
-//                     new KeyValuePair<StatType, int>(StatType.Attack, _curStats[0].Value),
-//                     new KeyValuePair<StatType, int>(StatType.Health, _curStats[1].Value),
-//                     new KeyValuePair<StatType, int>(StatType.Support, _curStats[2].Value)
-//                 });
-// 
-//                 gameObject.SetActive(false);
-//             });
-
             SellToRightButton.onClick.AddListener(() => 
             {
                 if (_curStats == null)
@@ -101,8 +83,6 @@ namespace Game.Views
                         statEle.Value = val;
 
                         showDesign();
-                        
-                        
 
 
                     });

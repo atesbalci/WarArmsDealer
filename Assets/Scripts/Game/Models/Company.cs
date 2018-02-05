@@ -19,23 +19,8 @@ namespace Game.Models
             DesignedWeapons = new List<Weapon>();
             Tech = new Technology();
             Money = 1000f;
-<<<<<<< HEAD
         }
 
-        public Company(string p_Name) {
-            CompanyDesigns = new Design(this);
-            ActiveResearches = new List<ResearchActivity>();
-            ActiveDesigns = new List<DesignActivity>();
-            DesignedWeapons = new List<Weapon>();
-            Tech = new Technology();
-            Money = 1000f;
-
-
-            Name = p_Name;
-=======
-            Name = name;
->>>>>>> 997096acdbee376af7a6b4d8c2d08b0c1a30d51e
-        }
 
         public override void Tick()
         {
