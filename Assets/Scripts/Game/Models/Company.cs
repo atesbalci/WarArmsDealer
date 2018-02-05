@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using UniRx;
 
 namespace Game.Models
 {
     public class Company : ModelBase
     {
-        public List<Activity> Activities { get; set; }
+        public ReactiveCollection<Activity> Activities { get; set; }
         public List<Weapon> DesignedWeapons;
         public Technology Tech { get; set; }
         public Design CompanyDesigns;
@@ -15,10 +16,11 @@ namespace Game.Models
         public Company(string name = "")
         {
             CompanyDesigns = new Design(this);
-            Activities = new List<Activity>();
+            Activities = new ReactiveCollection<Activity>();
             DesignedWeapons = new List<Weapon>();
             Tech = new Technology();
             Money = 1000f;
+            Name = name;
         }
 
 

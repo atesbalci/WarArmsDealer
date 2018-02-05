@@ -21,5 +21,10 @@ namespace Game.Models
         {
             MessageManager.Send(new DesignCompleteEvent { DesignActivity = this });
         }
+
+        public override string ToString()
+        {
+            return CreatedWeapon.Type.ToString();
+        }
     }
 }

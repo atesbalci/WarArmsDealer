@@ -17,19 +17,21 @@ namespace Game
         private Nation _nation0;
         private Nation _nation1;
         private WarSim _sim;
-        private Company _playerCompany = new Company();
+        private Company _playerCompany;
         private float _timer;
 
         public GameView GameView;
 
         private void Awake() {
+            _playerCompany = new Company("Bokcular Inc.");
             _nation0 = new Nation("Soviets");
             _nation1 = new Nation("Nazis");
             
             _sim = new WarSim(_nation0, _nation1);
 
-            GameView.Bind(_nation0, _nation1, new Company("Bokcuklar Inc."));
+            GameView.Bind(_nation0, _nation1, _playerCompany);
             GameView.UpdateCompanyState(_tickCount);
+            FindObjectOfType<ActivitiesView>().Bind(_playerCompany);
         }
         
         private void Update()
@@ -49,6 +51,7 @@ namespace Game
             _sim.SimulateBattle(CombatWidth);
             GameView.UpdateWarState(WarProgress);
             GameView.UpdateCompanyState(_tickCount);
+            _playerCompany.Tick();
             Debug.Log(WarProgress);
         }
     }

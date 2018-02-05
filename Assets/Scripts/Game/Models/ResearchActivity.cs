@@ -20,5 +20,10 @@ namespace Game.Models
         {
             MessageManager.Send(new ResearchCompleteEvent {ResearchActivity = this});
         }
+
+        public override string ToString()
+        {
+            return Research.Weapon.Type.ToString();
+        }
     }
 }
