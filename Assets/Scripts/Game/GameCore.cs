@@ -17,7 +17,7 @@ namespace Game
         private Nation _nation0;
         private Nation _nation1;
         private WarSim _sim;
-
+        private Company _playerCompany = new Company();
         private float _timer;
 
         public GameView GameView;
@@ -25,7 +25,7 @@ namespace Game
         private void Awake() {
             _nation0 = new Nation("Soviets");
             _nation1 = new Nation("Nazis");
-
+            
             _sim = new WarSim(_nation0, _nation1);
 
             GameView.Bind(_nation0, _nation1, new Company("Bokcuklar Inc."));
