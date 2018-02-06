@@ -4,6 +4,7 @@ using DG.Tweening.Core;
 using Game.Models;
 using Game.Views;
 using UnityEngine;
+using UniRx;
 
 namespace Game
 {
@@ -34,6 +35,9 @@ namespace Game
 
             GameView.Bind(_nation0, _nation1, _playerCompany);
             GameView.UpdateCompanyState(_tickCount);
+
+
+            _playerCompany.Money.Subscribe(f => { GameView.UpdateCompanyState(_tickCount); });
         }
         
         private void Update()

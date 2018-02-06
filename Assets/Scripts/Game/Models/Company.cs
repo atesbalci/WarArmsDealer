@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UniRx;
+using UnityEditor;
 
 namespace Game.Models
 {
@@ -10,7 +11,7 @@ namespace Game.Models
         public Technology Tech { get; set; }
         public Design CompanyDesigns;
         public string Name;
-        public float Money;
+        public FloatReactiveProperty Money;
 
 
         public Company(string name = "")
@@ -19,7 +20,7 @@ namespace Game.Models
             Activities = new ReactiveCollection<Activity>();
             DesignedWeapons = new List<Weapon>();
             Tech = new Technology();
-            Money = 10000f;
+            Money = new FloatReactiveProperty(2000f);
             Name = name;
         }
 
