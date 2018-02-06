@@ -1,4 +1,6 @@
-﻿namespace Game.Models
+﻿using System;
+
+namespace Game.Models
 {
     public class Nation : ModelBase
     {
@@ -44,6 +46,15 @@
             Manpower = 10000;
 
             Name = name;
+        }
+
+        /// <summary>
+        /// TODO : Handle trust and other mechanics with callback
+        /// </summary>
+        /// <param name="p_Weapon"></param>
+        /// <param name="p_CallbackAction">Handle callback with it</param>
+        public void BuyWeapon(Weapon p_Weapon, Action p_CallbackAction) {
+            Weapons[(int) p_Weapon.Type] = p_Weapon.Copy();
         }
     }
 }

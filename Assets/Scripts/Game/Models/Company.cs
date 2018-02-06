@@ -19,7 +19,7 @@ namespace Game.Models
             Activities = new ReactiveCollection<Activity>();
             DesignedWeapons = new List<Weapon>();
             Tech = new Technology();
-            Money = 1000f;
+            Money = 10000f;
             Name = name;
         }
 

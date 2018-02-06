@@ -14,6 +14,7 @@ namespace Game.Views {
         [Header("Buttons")]
         public Button WeaponDesignButton;
         public Button ReseachViewButton;
+        public Button SalesViewButton;
 
         [Header("Texts")]
         public Text CompanyInfoText;
@@ -22,6 +23,7 @@ namespace Game.Views {
         public WeaponDesignView WeaponDesignView;
         //public CreateDesignView CreateDesignView;
         public ResearchView ResearchView;
+        public SalesView SalesView;
 
         public void Bind(Nation p_Nation0, Nation p_Nation1, Company p_Company) {
             _nation0 = p_Nation0;
@@ -31,6 +33,7 @@ namespace Game.Views {
 
             WeaponDesignView.Bind(_company, _nation0, _nation1);
             ResearchView.Bind(_company);
+            SalesView.Bind(_company, _nation0, _nation1);
 
             WeaponDesignButton.onClick.AddListener(() => {
                 if(WeaponDesignView.gameObject.activeInHierarchy)
@@ -42,6 +45,10 @@ namespace Game.Views {
 
             ReseachViewButton.onClick.AddListener(() => {
                 ResearchView.gameObject.SetActive(!ResearchView.gameObject.activeSelf);
+            });
+
+            SalesViewButton.onClick.AddListener(() => {
+                SalesView.gameObject.SetActive(!SalesView.gameObject.activeSelf);
             });
         }
 
