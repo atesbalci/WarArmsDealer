@@ -33,7 +33,7 @@ namespace Game.Models {
             get {
                 Stat[] temp = new Stat[types.Length];
 
-                for (int i = 0, j = 0; i < Stats.Length; i++) {
+                for (int i = 0, j = 0; i < Stats.Length && j < types.Length; i++) {
                     if (Stats[i].Type == types[j]) {
                         temp[j] = new Stat {
                             Value = Stats[i].Value,
@@ -78,6 +78,7 @@ namespace Game.Models {
         }
 
         public Weapon() {
+            WeaponTraits = new List<Trait>();
             Stats = new Stat[System.Enum.GetNames(typeof(StatType)).Length];
 
             Stats[(int) StatType.Attack] = new AttackStat();

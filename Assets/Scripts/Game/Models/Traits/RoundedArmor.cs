@@ -4,11 +4,12 @@ using UnityEngine;
 
 namespace Game.Models
 {
-    public class Engineer : Trait
+    public class RoundedArmor : Trait
     {
+
         public override float[] ApplyTrait(Weapon weapon, Nation weaponNation, Nation oppositeNation)
         {
-            Debug.Assert(weapon.Type == WeaponType.Infantry);
+            Debug.Assert(weapon.Type == WeaponType.Tank);
             float[] traitModifiers = new float[3];
             int count = 0;
             foreach (var val in weapon[weapon.GetStatTypes()])
@@ -16,7 +17,10 @@ namespace Game.Models
                 traitModifiers[count] = val.Value;
                 count++;
             }
-            traitModifiers[(int)StatType.Support] *= 1.1f; //10% increase
+            traitModifiers[(int)StatType.Armor] *= 1.25f; //10% increase
+
+
+
             return traitModifiers;
         }
 
