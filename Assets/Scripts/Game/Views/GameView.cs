@@ -23,6 +23,7 @@ namespace Game.Views {
         public WeaponDesignView WeaponDesignView;
         //public CreateDesignView CreateDesignView;
         public ResearchView ResearchView;
+        public ActivitiesView ActivitiesView;
         public SalesView SalesView;
 
         public void Bind(Nation p_Nation0, Nation p_Nation1, Company p_Company) {
@@ -33,6 +34,7 @@ namespace Game.Views {
 
             WeaponDesignView.Bind(_company, _nation0, _nation1);
             ResearchView.Bind(_company);
+            ActivitiesView.Bind(_company);
             SalesView.Bind(_company, _nation0, _nation1);
 
             WeaponDesignButton.onClick.AddListener(() => {

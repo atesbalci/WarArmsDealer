@@ -6455,6 +6455,7 @@ MonoBehaviour:
   CompanyInfoText: {fileID: 1263519260}
   WeaponDesignView: {fileID: 2018328367}
   ResearchView: {fileID: 600121837}
+  ActivitiesView: {fileID: 551017093}
   SalesView: {fileID: 395633161}
 --- !u!1 &1657856062
 GameObject:
