@@ -113,7 +113,7 @@ namespace Game.Views
                     statView.Find("Text").GetComponent<Text>().text = stat.Item2;
                     var slider = statView.GetComponentInChildren<Slider>();
                     slider.value = 0f;
-                    slider.maxValue = _company.Tech.Weapons[(int)_type].Stats[(int)stat.Item1.Type].Value;
+                    slider.maxValue = _company.Tech.Weapons[(int)_type][stat.Item1.Type].Value;
                     var valueText = statView.Find("Value").GetComponent<Text>();
                     valueText.text = "0";
                     var statEle = new StatElement {

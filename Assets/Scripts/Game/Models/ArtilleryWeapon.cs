@@ -3,7 +3,7 @@
 namespace  Game.Models {
     public class ArtilleryWeapon : Weapon {
         public ArtilleryWeapon() {
-            Stats[(int) StatType.Piercing].Value = 1;
+            this[StatType.Piercing].Value = 1;
 
             Type = WeaponType.Artillery;
         }
@@ -14,7 +14,7 @@ namespace  Game.Models {
         /// <param name="keyValuePair"></param>
         public ArtilleryWeapon(KeyValuePair<StatType,int>[] keyValuePair) {
             foreach (var t in keyValuePair) {
-                Stats[(int) t.Key].Value = t.Value;
+                this[t.Key].Value = t.Value;
             }
 
             Type = WeaponType.Artillery;

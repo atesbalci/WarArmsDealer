@@ -24,7 +24,7 @@ namespace Game.Models {
     [Stat("Stat")]
     public class Stat : ModelBase {
         public int Value { get; set; }
-        public StatType Type { get; protected set; }
+        public StatType Type { get; set; }
 
         public Stat() {
             Value = 1;

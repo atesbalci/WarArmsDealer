@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Models {
@@ -21,6 +21,29 @@ namespace Game.Models {
     public class Weapon : ModelBase {
         public Stat[] Stats;
         public WeaponType Type;
+
+        public Stat this[StatType type] {
+            get { return Stats[(int)type]; }
+            set { Stats[(int) type] = value; }
+        }
+
+        public Stat[] this[StatType[] types] {
+            get {
+                Stat[] temp = new Stat[types.Length];
+
+                for (int i = 0, j = 0; i < Stats.Length; i++) {
+                    if (Stats[i].Type == types[j]) {
+                        temp[j] = new Stat {
+                            Value = Stats[i].Value,
+                            Type = Stats[i].Type
+                        };
+                        j++;
+                    }
+                }
+
+                return temp;
+            }
+        }
 
         public static Weapon CreateWeapon(WeaponType type, int v1, int v2, int v3)
         {
@@ -144,6 +167,17 @@ namespace Game.Models {
                     Stats[i].Value += change;
                 }
             }
+        }
+
+        public StatType[] GetStatTypes() {
+            List<StatType> output = new List<StatType>();
+
+            foreach (var stat in Stats) {
+                if (stat.Value != 0)
+                    output.Add(stat.Type);
+            }
+
+            return output.ToArray();
         }
 
         public Weapon Copy() {

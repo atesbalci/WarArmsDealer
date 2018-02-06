@@ -25,17 +25,17 @@ namespace Game.Models
             for (int i=0;i<3;i++)
             {
 
-                leftHealth += _nations[0].Weapons[i].Stats[(int)StatType.Health].Value;
-                rightHealth += _nations[1].Weapons[i].Stats[(int)StatType.Health].Value;
-                leftAttack += _nations[0].Weapons[i].Stats[(int)StatType.Attack].Value;
-                rightAttack += _nations[1].Weapons[i].Stats[(int)StatType.Attack].Value;
+                leftHealth += _nations[0].Weapons[i][StatType.Health].Value;
+                rightHealth += _nations[1].Weapons[i][StatType.Health].Value;
+                leftAttack += _nations[0].Weapons[i][StatType.Attack].Value;
+                rightAttack += _nations[1].Weapons[i][StatType.Attack].Value;
 
                 leftStartHealth = leftHealth;
                 rightStartHealth = rightHealth;
             }
 
-            float leftArmorWest = Mathf.Max(0f, _nations[0].CurrentTank.Stats[(int)StatType.Armor].Value - _nations[1].CurrentArtillery.Stats[(int)StatType.Piercing].Value);
-            float leftArmorEast = Mathf.Max(0f, _nations[1].CurrentTank.Stats[(int)StatType.Armor].Value - _nations[0].CurrentArtillery.Stats[(int)StatType.Piercing].Value);
+            float leftArmorWest = Mathf.Max(0f, _nations[0].CurrentTank[StatType.Armor].Value - _nations[1].CurrentArtillery[StatType.Piercing].Value);
+            float leftArmorEast = Mathf.Max(0f, _nations[1].CurrentTank[StatType.Armor].Value - _nations[0].CurrentArtillery[StatType.Piercing].Value);
 
             while (leftHealth > 0f && rightHealth > 0f)
             {

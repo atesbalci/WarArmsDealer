@@ -25,13 +25,13 @@ namespace Game.Models
             float duration = 0f;
             switch (Weapon.Type) {
                 case WeaponType.Infantry:
-                    duration += Weapon.Stats[(int)StatType.Attack].Value + Weapon.Stats[(int)StatType.Health].Value + Weapon.Stats[(int)StatType.Support].Value;
+                    duration += Weapon[StatType.Attack].Value + Weapon[StatType.Health].Value + Weapon[StatType.Support].Value;
                     break;
                 case WeaponType.Tank:
-                    duration += Weapon.Stats[(int)StatType.Attack].Value + Weapon.Stats[(int)StatType.Health].Value + Weapon.Stats[(int)StatType.Armor].Value;
+                    duration += Weapon[StatType.Attack].Value + Weapon[StatType.Health].Value + Weapon[StatType.Armor].Value;
                     break;
                 case WeaponType.Artillery:
-                    duration += Weapon.Stats[(int)StatType.Attack].Value + Weapon.Stats[(int)StatType.Health].Value + Weapon.Stats[(int)StatType.Piercing].Value;
+                    duration += Weapon[StatType.Attack].Value + Weapon[StatType.Health].Value + Weapon[StatType.Piercing].Value;
                     break;
                 default:
                     break;
