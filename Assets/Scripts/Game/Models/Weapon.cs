@@ -108,5 +108,25 @@ namespace Game.Models {
             return result;
         }
 
+        public void AddStat(StatType statType, int change) {
+            for (int i = 0; i < Stats.Length; i++) {
+                if (i == (int) statType) {
+                    Stats[i].Value += change;
+                }
+            }
+        }
+
+        public Weapon Copy() {
+            Weapon temp = new Weapon();
+
+            for (int i = 0; i < temp.Stats.Length; i++) {
+                temp.Stats[i].Value = this.Stats[i].Value;
+            }
+
+            temp.Type = this.Type;
+
+            return temp;
+        }
+
     }
 }

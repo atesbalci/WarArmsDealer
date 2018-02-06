@@ -23,7 +23,7 @@ namespace Game.Models
 
         public override string ToString()
         {
-            return Research.Weapon.Type.ToString();
+            return Research.Weapon.ToString();
         }
     }
 }

@@ -1,30 +1,93 @@
 ﻿using System;
-using System.Collections.Generic;
 using Game.Models;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
+using UniRx;
 
 namespace Game.Views {
     public class ResearchItemView : ViewBase {
 
-        private Weapon _weapon;
+        private Company _company;
+        private bool _canResearch;
+        private WeaponType _weaponType;
+        private ResearchActivity _researchActivity;
+        private IDisposable _subscription;
 
-        // TODO :: A VERY big big todo, Buttons should be given necessary listeners to create ResearchActivities to passed along to Company
-        // TODO :: Also you should track if same research is being done or not. GUD LUCK !!
-        public void Bind(Weapon p_Weapon) {
-            GameObject statValuesPanel = transform.Find("StatValuesPanel").gameObject;
-            GameObject statTextsPanel = transform.Find("StatTextsPanel").gameObject;
+        private GameObject _statValuesPanel, _statTextsPanel;
 
-            _weapon = p_Weapon;
+        public void Bind(Company p_Company, WeaponType p_WeaponType) {
+            _statValuesPanel = transform.Find("StatValuesPanel").gameObject;
+            _statTextsPanel = transform.Find("StatTextsPanel").gameObject;
 
-            transform.Find("WeaponName").GetComponent<Text>().text = Enum.GetName(typeof(WeaponType), p_Weapon.Type);
+            _company = p_Company;
+            _canResearch = true;
+            _weaponType = p_WeaponType;
+
+            RefreshUi();
 
             int lastStatIndex = 0;
+            for (int i = 0; i < _statValuesPanel.transform.childCount; i++) {
+
+                StatType p_type = StatType.Attack;
+
+                int tempLastIndex = lastStatIndex;
+
+                // This Loop iterates through Stats array of company
+                // lastIndex holds the last used Stat index for the listener
+                for (int j = tempLastIndex; j < _company.Tech.Weapons[(int)_weaponType].Stats.Length; j++) {
+                    if (_company.Tech.Weapons[(int)_weaponType].Stats[j].Value != 0) {
+                        lastStatIndex = j;
+                        p_type = _company.Tech.Weapons[(int)_weaponType].Stats[j].Type;
+                        break;
+                    }
+                }
+
+                // BUG :: There's a bug here ! Somewehere. When any kind of research finishes, every other on going research finishes in logic, but still shown as Activity.
+                _statValuesPanel.transform.GetChild(i).Find("Increment").GetComponent<Button>().onClick.AddListener(
+                    () => {
+                        if (_canResearch) {
+                            Weapon tempWeapon = _company.Tech.Weapons[(int)_weaponType].Copy();
+                            tempWeapon.AddStat(p_type, 1);
+                            Research tempResearch = new Research(tempWeapon, p_type);
+                            _researchActivity = new ResearchActivity(tempResearch);
+                            _company.AddResearch(tempResearch);
+                            _subscription = MessageManager.Receive<ResearchCompleteEvent>().Subscribe(ev => { ResearchComplete(_researchActivity); });
+                            _canResearch = false;
+                        }
+                        else {
+                            Debug.Log("Az bekle mk");
+                        }
+                    });
+
+                lastStatIndex++;
+            }
+        }
+
+        private void ResearchComplete(ResearchActivity p_ResearchActivity) {
+            if (p_ResearchActivity.Research.Weapon.Type != _weaponType)
+                return;
+
+            _canResearch = true;
+
+            _company.Tech.Weapons[(int) p_ResearchActivity.Research.Weapon.Type].AddStat(p_ResearchActivity.Research.StatType, 1);
+
+            _subscription.Dispose();
+
+            RefreshUi();
+        }
+
+        private void RefreshUi() {
+
+            transform.Find("WeaponName").GetComponent<Text>().text = Enum.GetName(typeof(WeaponType), _company.Tech.Weapons[(int)_weaponType].Type);
+
+            // Set Stat texts of UI
+            int lastStatIndex = 0;
             for (int i = 0; i < 3; i++) {
-                for (int k = lastStatIndex; k < p_Weapon.Stats.Length; k++) {
-                    if (p_Weapon.Stats[k].Value != 0) {
-                        statValuesPanel.transform.GetChild(i).GetComponent<Text>().text = p_Weapon.Stats[k].Value.ToString();
-                        statTextsPanel.transform.GetChild(i).GetComponent<Text>().text = Enum.GetName(typeof(StatType), p_Weapon.Stats[k].Type);
+                for (int k = lastStatIndex; k < _company.Tech.Weapons[(int)_weaponType].Stats.Length; k++) {
+                    if (_company.Tech.Weapons[(int)_weaponType].Stats[k].Value != 0) {
+                        _statValuesPanel.transform.GetChild(i).GetComponent<Text>().text = _company.Tech.Weapons[(int)_weaponType].Stats[k].Value.ToString();
+                        _statTextsPanel.transform.GetChild(i).GetComponent<Text>().text = Enum.GetName(typeof(StatType), _company.Tech.Weapons[(int)_weaponType].Stats[k].Type);
                         lastStatIndex = k + 1;
                         break;
                     }

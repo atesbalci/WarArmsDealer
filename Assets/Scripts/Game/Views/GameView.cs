@@ -41,7 +41,7 @@ namespace Game.Views {
             });
 
             ReseachViewButton.onClick.AddListener(() => {
-                ResearchView.gameObject.SetActive(true);
+                ResearchView.gameObject.SetActive(!ResearchView.gameObject.activeSelf);
             });
         }
 
