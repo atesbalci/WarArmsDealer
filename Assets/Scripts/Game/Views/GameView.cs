@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine;
 using UniRx;
+using Utils.ViewHelpers;
 
 namespace Game.Views {
     public class GameView : ViewBase {
@@ -39,17 +40,17 @@ namespace Game.Views {
             SalesView.Bind(_company, _nation0, _nation1);
 
             WeaponDesignButton.onClick.AddListener(() => {
-                WeaponDesignView.gameObject.SetActive(!WeaponDesignView.gameObject.activeInHierarchy);
+                WeaponDesignView.gameObject.GetComponent<PanelGroupElement>().Toggle();
 
                 WeaponDesignView.CreateDesignView.gameObject.SetActive(!WeaponDesignView.gameObject.activeInHierarchy);
             });
 
             ReseachViewButton.onClick.AddListener(() => {
-                ResearchView.gameObject.SetActive(!ResearchView.gameObject.activeSelf);
+                ResearchView.GetComponent<PanelGroupElement>().Toggle();
             });
 
             SalesViewButton.onClick.AddListener(() => {
-                SalesView.gameObject.SetActive(!SalesView.gameObject.activeSelf);
+                SalesView.GetComponent<PanelGroupElement>().Toggle();
 
                 for (int i = SalesView.DesignsPanelParent.childCount - 1; i < _company.CompanyDesigns.CompletedDesigns.Count; i++) {
                     GameObject tempDesign = Instantiate(SalesView.WeaponDesignPrefab, SalesView.DesignsPanelParent, false);
