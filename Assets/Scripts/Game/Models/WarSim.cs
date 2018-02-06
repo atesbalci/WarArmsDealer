@@ -12,6 +12,17 @@ namespace Game.Models
             _nations[0] = east;
             _nations[1] = west;
         }
+
+        void HandleTraits()
+        {
+            for(int nat = 0; nat < _nations.Length; nat++)
+            for(int i = 0; i < _nations[nat].CurrentInfantry.WeaponTraits.Count; i++)
+            {
+                    var trait = _nations[nat].CurrentInfantry.WeaponTraits[i];
+                    trait.ApplyTrait(_nations[nat], _nations[(nat-1)%2]);
+
+            }
+        }
         
         public void SimulateBattle(float combatWidth)
         {
@@ -20,7 +31,9 @@ namespace Game.Models
             float rightHealth = 0f;
             float rightAttack = 0f;
 
-            float leftStartHealth = 0f, rightStartHealth = 0f; 
+            float leftStartHealth = 0f, rightStartHealth = 0f;
+
+            HandleTraits();
 
             for (int i=0;i<3;i++)
             {

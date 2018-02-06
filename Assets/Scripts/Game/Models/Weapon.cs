@@ -21,6 +21,8 @@ namespace Game.Models {
     public class Weapon : ModelBase {
         public Stat[] Stats;
         public WeaponType Type;
+        public string Name;
+        public List<Trait> WeaponTraits;
 
         public Stat this[StatType type] {
             get { return Stats[(int)type]; }

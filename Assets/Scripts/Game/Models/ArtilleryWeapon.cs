@@ -2,9 +2,8 @@
 
 namespace  Game.Models {
     public class ArtilleryWeapon : Weapon {
-        public ArtilleryWeapon() {
+        public ArtilleryWeapon() : base() {
             this[StatType.Piercing].Value = 1;
-
             Type = WeaponType.Artillery;
         }
 

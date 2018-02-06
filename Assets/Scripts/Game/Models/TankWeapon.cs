@@ -2,7 +2,8 @@
 
 namespace Game.Models {
     public class TankWeapon : Weapon {
-        public TankWeapon() {
+        public TankWeapon() : base() {
+
             this[StatType.Armor].Value = 1;
 
             Type = WeaponType.Tank;

@@ -13,7 +13,6 @@ namespace Game.Models
             return company.Activities.Count(x => x is ResearchActivity) < 2;
 
         }
-
         public static bool CanDesign(Weapon weapon, Company company)
         {
             return company.Activities.Count(x => x is DesignActivity) < 2 && company.Money >= weapon.GetCost();
