@@ -20,19 +20,24 @@ namespace Game.Views {
 
         [Header("Views")]
         public WeaponDesignView WeaponDesignView;
+        //public CreateDesignView CreateDesignView;
         public ResearchView ResearchView;
 
         public void Bind(Nation p_Nation0, Nation p_Nation1, Company p_Company) {
             _nation0 = p_Nation0;
             _nation1 = p_Nation1;
             _company = p_Company;
-            
+
+
             WeaponDesignView.Bind(_company, _nation0, _nation1);
             ResearchView.Bind(_company);
 
             WeaponDesignButton.onClick.AddListener(() => {
-                WeaponDesignView.gameObject.SetActive(true);
-                WeaponDesignView.Show(new InfantryWeapon());
+                if(WeaponDesignView.gameObject.activeInHierarchy)
+                    WeaponDesignView.gameObject.SetActive(false);
+                else
+                    WeaponDesignView.gameObject.SetActive(true);
+                //CreateDesignView.Show(new InfantryWeapon());
             });
 
             ReseachViewButton.onClick.AddListener(() => {

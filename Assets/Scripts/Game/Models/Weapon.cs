@@ -85,7 +85,28 @@ namespace Game.Models {
                 default:
                     break;
             }
-            return Mathf.Pow(2f, duration/3.0f);
+            return Mathf.Pow(2f, duration/3.0f) * 5f;
         }
+
+        public override string ToString()
+        {
+            string result = "";
+            switch (Type)
+            {
+                case WeaponType.Infantry:
+                    result = "Infantry: " + Stats[(int)StatType.Attack].Value + " " + Stats[(int)StatType.Health].Value + " " + Stats[(int)StatType.Support].Value;
+                    break;
+                case WeaponType.Tank:
+                    result = "Tank: " + Stats[(int)StatType.Attack].Value + " " + Stats[(int)StatType.Health].Value + " " + Stats[(int)StatType.Armor].Value;
+                    break;
+                case WeaponType.Artillery:
+                    result = "Artillery: " + Stats[(int)StatType.Attack].Value + " " + Stats[(int)StatType.Health].Value + " " + Stats[(int)StatType.Piercing].Value;
+                    break;
+                default:
+                    break;
+            }
+            return result;
+        }
+
     }
 }

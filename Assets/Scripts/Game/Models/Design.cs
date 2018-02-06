@@ -23,6 +23,7 @@ namespace Game.Models
             _playerCompany = playerCompany;
             Debug.Log("Subscribed");
             MessageManager.Receive<DesignCompleteEvent>().Subscribe(ev => {designComplete(ev.DesignActivity); });
+            
         }
 
 
@@ -32,7 +33,7 @@ namespace Game.Models
             //maybe we will modify the design time
             _playerCompany.Money -= weapon.GetCost();
 
-            _playerCompany.Activities.Add(new DesignActivity(weapon, BaseDesignTime));
+            _playerCompany.Activities.Add(new DesignActivity(weapon, Mathf.CeilToInt(weapon.GetDuration())));
         }
 
         void designComplete(DesignActivity da)

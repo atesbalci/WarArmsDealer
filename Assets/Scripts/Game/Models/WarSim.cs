@@ -59,8 +59,8 @@ namespace Game.Models
             _nations[0].Manpower -= (1 - leftHealth / leftStartHealth) * combatWidth * 10;
             _nations[1].Manpower -= (1 - rightHealth / rightStartHealth) * combatWidth * 10;
 
-            Debug.Log(_nations[0].Name + " Remaining manpower: " + _nations[0].Manpower);
-            Debug.Log(_nations[1].Name + " Remaining manpower: " + _nations[1].Manpower);
+            //Debug.Log(_nations[0].Name + " Remaining manpower: " + _nations[0].Manpower);
+            //Debug.Log(_nations[1].Name + " Remaining manpower: " + _nations[1].Manpower);
         }
     }
 }
