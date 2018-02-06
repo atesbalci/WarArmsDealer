@@ -19,7 +19,7 @@ namespace Game.Models
                 traitModifiers[count] = val.Value;
                 count++;
             }
-            traitModifiers[(int)StatType.Attack] *= 1.1; //10% increase
+            traitModifiers[(int)StatType.Attack] *= 1.1f; //10% increase
 
 
 
