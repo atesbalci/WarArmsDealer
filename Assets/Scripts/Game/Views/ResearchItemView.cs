@@ -49,10 +49,9 @@ namespace Game.Views {
                         if (_canResearch) {
                             Weapon tempWeapon = _company.Tech.Weapons[(int)_weaponType].Copy();
                             tempWeapon.AddStat(p_type, 1);
-                            Research tempResearch = new Research(tempWeapon, p_type);
-                            _researchActivity = new ResearchActivity(tempResearch);
-                            _company.AddResearch(tempResearch);
-                            _subscription = MessageManager.Receive<ResearchCompleteEvent>().Subscribe(ev => { ResearchComplete(_researchActivity); });
+                            _researchActivity = new ResearchActivity(new Research(tempWeapon, p_type));
+                            _company.AddResearch(_researchActivity);
+                            _subscription = MessageManager.Receive<ResearchCompleteEvent>().Subscribe(ResearchComplete);
                             _canResearch = false;
                         }
                         else {
@@ -64,13 +63,13 @@ namespace Game.Views {
             }
         }
 
-        private void ResearchComplete(ResearchActivity p_ResearchActivity) {
-            if (p_ResearchActivity.Research.Weapon.Type != _weaponType)
+        private void ResearchComplete(ResearchCompleteEvent p_ResearchCompleteEvent) {
+            if (p_ResearchCompleteEvent.ResearchActivity.Research.Weapon.Type != _weaponType)
                 return;
 
             _canResearch = true;
 
-            _company.Tech.Weapons[(int) p_ResearchActivity.Research.Weapon.Type].AddStat(p_ResearchActivity.Research.StatType, 1);
+            _company.Tech.Weapons[(int)p_ResearchCompleteEvent.ResearchActivity.Research.Weapon.Type].AddStat(p_ResearchCompleteEvent.ResearchActivity.Research.StatType, 1);
 
             _subscription.Dispose();
 

@@ -44,6 +44,11 @@ namespace Game.Models
         {
             Activities.Add(new ResearchActivity(research));
         }
+
+        public void AddResearch(ResearchActivity p_ResearchActivity) {
+            Activities.Add(p_ResearchActivity);
+        }
+
         [System.Obsolete("This is an obsolete method")]
         public void AddDesign(Weapon design)
         {
