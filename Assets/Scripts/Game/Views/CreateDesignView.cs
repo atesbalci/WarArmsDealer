@@ -14,17 +14,23 @@ namespace Game.Views
         public Text DesignCostText;
         [Space(10)]
         public GameObject StatsTemplate;
+        public GameObject TypeTemplate;
 
         private Company _company;
         private Nation _nation0, _nation1;
         private List<StatElement> _curStats;
+        private List<Tuple<Stat, string>> stats; 
+        private Weapon _newProject;
+        private WeaponType _type;
+
 
         public void Bind(Company company, Nation nation0, Nation nation1)
         {
             _company = company;
             _nation0 = nation0;
             _nation1 = nation1;
-
+            _newProject = new Weapon();
+            stats = new List<Tuple<Stat, string>>();
             CreateDesignButton.onClick.AddListener(() => 
             {
                 if (_curStats == null)
@@ -33,36 +39,73 @@ namespace Game.Views
                     stat.Stat.Value = stat.Value;
                 }
 
-                Weapon newDesign =  new InfantryWeapon(new KeyValuePair<StatType, int>[3] {
-                    new KeyValuePair<StatType, int>(StatType.Attack, _curStats[0].Value),
-                    new KeyValuePair<StatType, int>(StatType.Health, _curStats[1].Value),
-                    new KeyValuePair<StatType, int>(StatType.Support, _curStats[2].Value)
-                });
-
-                _company.CompanyDesigns.CreateDesignActivity(newDesign);
+                _company.CompanyDesigns.CreateDesignActivity(_newProject);
 
                 gameObject.SetActive(false);
                 transform.parent.gameObject.SetActive(false);
             });
+            TypeTemplate.SetActive(true);
+            foreach (Toggle t in TypeTemplate.GetComponentsInChildren<Toggle>())
+            {
+
+                t.onValueChanged.AddListener(toggle =>
+                {
+                    if (toggle)
+                        switch (t.name)
+                        {
+                            case "Infantry":
+                                Debug.Log(toggle + " Infantry");
+                                _type = WeaponType.Infantry;
+                                break;
+                            case "Tank":
+                                _type = WeaponType.Tank;
+                                break;
+                            case "Artillery":
+                                _type = WeaponType.Artillery;
+                                break;
+
+                        }
+
+                    stats = new List<Tuple<Stat, string>>();
+
+
+                    Show();
+
+                });
+            }
         }
 
-        public void Show(Weapon newProject)
+        public void Show()
         {
             //Begin reflection wizardry
-            var stats = new List<Tuple<Stat, string>>();
-
-            foreach (var stat in newProject.Stats) {
-                stats.Add(new Tuple<Stat, string>(stat, System.Enum.GetName(typeof(StatType), stat.Type)));
-            }
+            
+            
+            
 
             foreach (Transform child in StatsParent)
             {
-                if (child.gameObject != StatsTemplate)
+                if (child.gameObject != StatsTemplate && child.gameObject != TypeTemplate)
                 {
                     Destroy(child.gameObject);
                 }
             }
+
+            //var typeSelect = Instantiate(TypeTemplate, StatsParent, false);
+            
+
+            _newProject = Weapon.CreateWeapon(_type, 1, 1, 1);
+
+            foreach (var stat in _newProject.Stats)
+            {
+                stats.Add(new Tuple<Stat, string>(stat, System.Enum.GetName(typeof(StatType), stat.Type)));
+            }
+
+
+
+
             _curStats = new List<StatElement>();
+            
+            
             foreach (var stat in stats)
             {
                 if (stat.Item1.Value != 0) {
@@ -70,7 +113,7 @@ namespace Game.Views
                     statView.Find("Text").GetComponent<Text>().text = stat.Item2;
                     var slider = statView.GetComponentInChildren<Slider>();
                     slider.value = 0f;
-                    slider.maxValue = _company.Tech.Weapons[0].Stats[(int)stat.Item1.Type].Value;
+                    slider.maxValue = _company.Tech.Weapons[(int)_type].Stats[(int)stat.Item1.Type].Value;
                     var valueText = statView.Find("Value").GetComponent<Text>();
                     valueText.text = "0";
                     var statEle = new StatElement {
@@ -100,7 +143,7 @@ namespace Game.Views
 
         private void OnEnable()
         {
-            Show(new InfantryWeapon());
+            Show();
         }
 
         void showDesign()

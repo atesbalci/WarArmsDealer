@@ -22,6 +22,36 @@ namespace Game.Models {
         public Stat[] Stats;
         public WeaponType Type;
 
+        public static Weapon CreateWeapon(WeaponType type, int v1, int v2, int v3)
+        {
+            Weapon w;
+            switch (type)
+            {
+                case WeaponType.Infantry:
+                    w = new InfantryWeapon();
+                    w.Stats[(int)StatType.Attack].Value = v1;
+                    w.Stats[(int)StatType.Health].Value = v2;
+                    w.Stats[(int)StatType.Support].Value = v3;
+                    break;
+                case WeaponType.Tank:
+                    w = new TankWeapon();
+                    w.Stats[(int)StatType.Attack].Value = v1;
+                    w.Stats[(int)StatType.Health].Value = v2;
+                    w.Stats[(int)StatType.Armor].Value = v3;
+                    break;
+                case WeaponType.Artillery:
+                    w = new ArtilleryWeapon();
+                    w.Stats[(int)StatType.Attack].Value = v1;
+                    w.Stats[(int)StatType.Health].Value = v2;
+                    w.Stats[(int)StatType.Piercing].Value = v3;
+                    break;
+                default:
+                    return null;
+                    
+            }
+            return w;
+        }
+
         public Weapon() {
             Stats = new Stat[System.Enum.GetNames(typeof(StatType)).Length];
 

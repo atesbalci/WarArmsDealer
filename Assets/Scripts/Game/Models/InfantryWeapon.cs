@@ -2,7 +2,7 @@
 
 namespace Game.Models {
     public class InfantryWeapon : Weapon {
-        public InfantryWeapon() {
+        public InfantryWeapon() : base() {
             Stats[(int) StatType.Support].Value = 1;
 
             Type = WeaponType.Infantry;
