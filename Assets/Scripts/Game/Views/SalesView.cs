@@ -18,23 +18,6 @@ namespace Game.Views {
 
             for (int i = 0; i < _company.CompanyDesigns.CompletedDesigns.Count; i++) {
                 GameObject tempDesign = Instantiate(WeaponDesignPrefab, DesignsPanelParent, false);
-                tempDesign.transform.Find("Text").GetComponent<Text>().text = _company.DesignedWeapons[i].ToString();
-                tempDesign.SetActive(true);
-
-                tempDesign.transform.Find("SellLeft").GetComponent<Button>().onClick.AddListener(() => {
-                    _nation0.BuyWeapon(_company.DesignedWeapons[i], null);
-                });
-
-                tempDesign.transform.Find("SellRight").GetComponent<Button>().onClick.AddListener(() => 
-                {
-                    _nation0.BuyWeapon(_company.DesignedWeapons[1], null);
-                });
-            }
-        }
-
-        public void OnEnable() {
-            for (int i = DesignsPanelParent.childCount - 1; i < _company.CompanyDesigns.CompletedDesigns.Count; i++) {
-                GameObject tempDesign = Instantiate(WeaponDesignPrefab, DesignsPanelParent, false);
                 tempDesign.transform.Find("Text").GetComponent<Text>().text = _company.CompanyDesigns.CompletedDesigns[i].ToString();
                 tempDesign.SetActive(true);
 

@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using DG.Tweening;
+using DG.Tweening.Core;
 using Game.Models;
 using Game.Views;
 using UnityEngine;
+using UniRx;
 
 namespace Game
 {
@@ -23,6 +26,7 @@ namespace Game
         public GameView GameView;
 
         private void Awake() {
+            DOTween.Init();
             _playerCompany = new Company("Bokcular Inc.");
             _nation0 = new Nation("Soviets");
             _nation1 = new Nation("Nazis");
@@ -31,7 +35,9 @@ namespace Game
 
             GameView.Bind(_nation0, _nation1, _playerCompany);
             GameView.UpdateCompanyState(_tickCount);
-            FindObjectOfType<ActivitiesView>().Bind(_playerCompany);
+
+
+            _playerCompany.Money.Subscribe(f => { GameView.UpdateCompanyState(_tickCount); });
         }
         
         private void Update()

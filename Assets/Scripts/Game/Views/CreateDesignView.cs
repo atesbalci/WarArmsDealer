@@ -95,12 +95,11 @@ namespace Game.Views
 
             _newProject = Weapon.CreateWeapon(_type, 1, 1, 1);
 
-            foreach (var stat in _newProject.Stats)
-            {
+            stats = new List<Tuple<Stat, string>>();
+
+            foreach (var stat in _newProject.Stats) {
                 stats.Add(new Tuple<Stat, string>(stat, System.Enum.GetName(typeof(StatType), stat.Type)));
             }
-
-
 
 
             _curStats = new List<StatElement>();

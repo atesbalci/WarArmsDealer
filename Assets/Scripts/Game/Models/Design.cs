@@ -31,7 +31,7 @@ namespace Game.Models
         public void CreateDesignActivity(Weapon weapon)
         {
             //maybe we will modify the design time
-            _playerCompany.Money -= weapon.GetCost();
+            _playerCompany.Money.Value -= weapon.GetCost();
 
             _playerCompany.Activities.Add(new DesignActivity(weapon, Mathf.CeilToInt(weapon.GetDuration())));
         }

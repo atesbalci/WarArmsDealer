@@ -49,12 +49,27 @@ namespace Game.Models
         }
 
         /// <summary>
-        /// TODO : Handle trust and other mechanics with callback
+        /// TODO : Handle trust and other mechanics
         /// </summary>
         /// <param name="p_Weapon"></param>
         /// <param name="p_CallbackAction">Handle callback with it</param>
         public void BuyWeapon(Weapon p_Weapon, Action p_CallbackAction) {
-            Weapons[(int) p_Weapon.Type] = p_Weapon.Copy();
+            int curStatSum = 0;
+            foreach (var stat in Weapons[(int)p_Weapon.Type].Stats) {
+                curStatSum += stat.Value;
+            }
+
+            int newStatSum = 0;
+            foreach (var stat in p_Weapon.Stats) {
+                newStatSum += stat.Value;
+            }
+
+            if (newStatSum >= curStatSum) {
+                Weapons[(int)p_Weapon.Type] = p_Weapon.Copy();
+
+                if (p_CallbackAction != null)
+                    p_CallbackAction.Invoke();
+            }
         }
     }
 }
