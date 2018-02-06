@@ -107,7 +107,7 @@ namespace Game.Views
                         });
             if(!Conditions.CanDesign(newDesign, _company))
             {
-                CreateDesignButton.interactable = true;
+                CreateDesignButton.interactable = false;
             }
             else
             {
