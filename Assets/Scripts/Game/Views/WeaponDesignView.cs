@@ -43,5 +43,9 @@ namespace Game.Views
             */
 
         }
+
+        private void OnDisable() {
+            CreateDesignView.gameObject.SetActive(false);
+        }
     }
 }
