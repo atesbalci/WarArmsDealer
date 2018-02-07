@@ -11,10 +11,10 @@ namespace Game
     public class GameCore : MonoBehaviour
     {
         public const float TickFrequency = 1f;
-        public float CombatWidth { get {return 10f + Mathf.Log10(_tickCount+10); } }
+        public float CombatWidth { get {return Mathf.Log10(_tickCount+10); } }
 
         //Progress -100 means Nation0 lost, Progress 100 means Nation1 lost
-        public float WarProgress { get { return _nation1.Manpower / (_nation0.Manpower + _nation1.Manpower)*200f-100f; } }
+        float WarProgress = 0f;
 
         private int _tickCount;
         private Nation _nation0;
@@ -54,7 +54,7 @@ namespace Game
 
         private void Tick()
         {
-            _sim.SimulateBattle(CombatWidth);
+            WarProgress = _sim.SimulateBattle(CombatWidth, WarProgress);
             GameView.UpdateWarState(WarProgress);
             GameView.UpdateCompanyState(_tickCount);
             _playerCompany.Tick();

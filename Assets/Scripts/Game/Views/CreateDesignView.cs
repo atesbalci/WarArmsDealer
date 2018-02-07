@@ -96,7 +96,11 @@ namespace Game.Views
                 
                 _company.CompanyDesigns.CreateDesignActivity(_newProject);
 
-                
+                foreach (Toggle t in TypeTemplate.GetComponentsInChildren<Toggle>())
+                {
+                    t.interactable = true;
+                }
+
                 transform.parent.Find("AllDesignPanel").gameObject.SetActive(true);
                 gameObject.SetActive(false);
                 //transform.SetAsFirstSibling();

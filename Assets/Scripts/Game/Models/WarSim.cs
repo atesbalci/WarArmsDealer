@@ -123,10 +123,10 @@ namespace Game.Models
 
         }
         
-        public void SimulateBattle(float combatWidth) {
+        public float SimulateBattle(float combatWidth, float progress) {
             //OldSim(combatWidth);
 
-            NewSim(combatWidth);
+            return NewSim(combatWidth, progress);
         }
 
         private void OldSim(float combatWidth) {
@@ -195,7 +195,7 @@ namespace Game.Models
             //Debug.Log(_nations[1].Name + " Remaining manpower: " + _nations[1].Manpower);
         }
 
-        private void NewSim(float combatWidth) {
+        private float NewSim(float combatWidt, float progress) {
             float healthEast = 0f;
             float attackEast = 0f;
             float healthWest = 0f;
@@ -242,17 +242,16 @@ namespace Game.Models
             healthEast = Mathf.Max(0f, healthEast);
             healthWest = Mathf.Max(0f, healthWest);
 
-            /*if(leftHealth>rightHealth)
+            if(healthEast > healthWest)
             {
-                Debug.Log("<color=red>"+ _nations[0].Name + "</color> has won");
+                progress = progress - 1;
             }
             else
             {
-                Debug.Log("<color=red>" + _nations[1].Name + "</color> has won");
-            }*/
+                progress = progress + 1;
+            }
 
-            _nations[0].Manpower -= (1 - healthEast / startHealthEast) * combatWidth * 10;
-            _nations[1].Manpower -= (1 - healthWest / startHealthWest) * combatWidth * 10;
+            return progress;
 
             //Debug.Log(_nations[0].Name + " Remaining manpower: " + _nations[0].Manpower);
             //Debug.Log(_nations[1].Name + " Remaining manpower: " + _nations[1].Manpower);

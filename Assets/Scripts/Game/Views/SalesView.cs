@@ -46,12 +46,16 @@ namespace Game.Views {
                 int i1 = i;
                 tempDesign.transform.Find("SellLeft").GetComponent<Button>().onClick.AddListener(() => {
                     _nation1.BuyWeapon(_company.CompanyDesigns.CompletedDesigns[i1],
-                        () => { _company.Money.Value += _company.CompanyDesigns.CompletedDesigns[i1].GetCost() * 2; });
+                        () => { _company.Money.Value += _company.CompanyDesigns.CompletedDesigns[i1].GetCost() * 2;
+                            tempDesign.transform.Find("SellLeft").GetComponent<Button>().interactable = false;
+                        });
                 });
 
                 tempDesign.transform.Find("SellRight").GetComponent<Button>().onClick.AddListener(() => {
                     _nation0.BuyWeapon(_company.CompanyDesigns.CompletedDesigns[i1],
-                        () => { _company.Money.Value += _company.CompanyDesigns.CompletedDesigns[i1].GetCost() * 2; });
+                        () => { _company.Money.Value += _company.CompanyDesigns.CompletedDesigns[i1].GetCost() * 2;
+                            tempDesign.transform.Find("SellRight").GetComponent<Button>().interactable = false;
+                        });
                 });
             }
         }
