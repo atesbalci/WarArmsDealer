@@ -4,19 +4,19 @@ using UnityEngine;
 
 namespace Game.Models
 {
-    public class Engineer : Trait
+    public class SurvivalKits : Trait
     {
-        
-        public Engineer()
+
+        public SurvivalKits()
         {
-            Name = "Engineers:";
-            Description = "Increases the support of the weapon by 25%";
-            Complexity = 2;
+            Name = "Survival Kits:";
+            Description = "Increases the health of infantry by 10%";
+            Complexity = 1;
         }
 
         public override float[] ApplyTrait(Weapon weapon, Nation weaponNation, Nation oppositeNation)
         {
-            
+
             Debug.Assert(weapon.Type == WeaponType.Infantry);
             float[] traitModifiers = new float[3];
             int count = 0;
@@ -25,7 +25,8 @@ namespace Game.Models
                 traitModifiers[count] = val.Value;
                 count++;
             }
-            traitModifiers[2] *= 1.25f; //25% increase
+            traitModifiers[1] *= 1.1f;
+
             return traitModifiers;
         }
 

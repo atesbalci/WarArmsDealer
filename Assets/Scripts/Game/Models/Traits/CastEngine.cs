@@ -4,20 +4,19 @@ using UnityEngine;
 
 namespace Game.Models
 {
-    public class Engineer : Trait
+    public class CastEngine : Trait
     {
-        
-        public Engineer()
+        public CastEngine()
         {
-            Name = "Engineers:";
-            Description = "Increases the support of the weapon by 25%";
+            Name = "Cast Engine Manifold:";
+            Description = "Tungsten rounds are better for piercing armor. Increases piercing by 10%";
             Complexity = 2;
         }
 
         public override float[] ApplyTrait(Weapon weapon, Nation weaponNation, Nation oppositeNation)
         {
-            
-            Debug.Assert(weapon.Type == WeaponType.Infantry);
+
+            Debug.Assert(weapon.Type == WeaponType.Tank);
             float[] traitModifiers = new float[3];
             int count = 0;
             foreach (var val in weapon[weapon.GetStatTypes()])
@@ -25,7 +24,10 @@ namespace Game.Models
                 traitModifiers[count] = val.Value;
                 count++;
             }
-            traitModifiers[2] *= 1.25f; //25% increase
+            traitModifiers[0] *= 1.1f; //10% increase
+
+
+
             return traitModifiers;
         }
 

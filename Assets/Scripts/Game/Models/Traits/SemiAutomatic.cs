@@ -4,19 +4,19 @@ using UnityEngine;
 
 namespace Game.Models
 {
-    public class Engineer : Trait
+    public class SemiAutomatic : Trait
     {
-        
-        public Engineer()
+
+        public SemiAutomatic()
         {
-            Name = "Engineers:";
-            Description = "Increases the support of the weapon by 25%";
+            Name = "Semi-automatic Rifles:";
+            Description = "Increases the attack of the infantry by 25%";
             Complexity = 2;
         }
 
         public override float[] ApplyTrait(Weapon weapon, Nation weaponNation, Nation oppositeNation)
         {
-            
+
             Debug.Assert(weapon.Type == WeaponType.Infantry);
             float[] traitModifiers = new float[3];
             int count = 0;
@@ -25,7 +25,10 @@ namespace Game.Models
                 traitModifiers[count] = val.Value;
                 count++;
             }
-            traitModifiers[2] *= 1.25f; //25% increase
+
+            traitModifiers[0] *= 1.25f;
+
+
             return traitModifiers;
         }
 
