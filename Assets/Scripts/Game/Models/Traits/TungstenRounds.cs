@@ -8,7 +8,9 @@ namespace Game.Models
     {
         public TungstenRounds()
         {
-            Name = "Tungsten Rounds";
+            Name = "Tungsten Rounds:";
+            Description = "Tungsten rounds are better for piercing armor. Increases piercing by 10%";
+            Complexity = 2;
         }
 
         public override float[] ApplyTrait(Weapon weapon, Nation weaponNation, Nation oppositeNation)
@@ -22,7 +24,7 @@ namespace Game.Models
                 traitModifiers[count] = val.Value;
                 count++;
             }
-            traitModifiers[(int)StatType.Attack] *= 1.1f; //10% increase
+            traitModifiers[0] *= 1.1f; //10% increase
 
 
 

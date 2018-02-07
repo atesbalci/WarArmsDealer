@@ -14,7 +14,7 @@ namespace Game
         public float CombatWidth { get {return 10f + Mathf.Log10(_tickCount+10); } }
 
         //Progress -100 means Nation0 lost, Progress 100 means Nation1 lost
-        public float WarProgress { get { return _nation0.Manpower / (_nation0.Manpower + _nation1.Manpower)*200f-100f; } }
+        public float WarProgress { get { return _nation1.Manpower / (_nation0.Manpower + _nation1.Manpower)*200f-100f; } }
 
         private int _tickCount;
         private Nation _nation0;

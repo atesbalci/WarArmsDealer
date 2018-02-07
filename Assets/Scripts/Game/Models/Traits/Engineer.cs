@@ -9,7 +9,9 @@ namespace Game.Models
         
         public Engineer()
         {
-            Name = "Engineers";
+            Name = "Engineers:";
+            Description = "Increases the support of the weapon by 10%";
+            Complexity = 1;
         }
 
         public override float[] ApplyTrait(Weapon weapon, Nation weaponNation, Nation oppositeNation)
@@ -23,7 +25,7 @@ namespace Game.Models
                 traitModifiers[count] = val.Value;
                 count++;
             }
-            traitModifiers[(int)StatType.Support] *= 1.1f; //10% increase
+            traitModifiers[2] *= 1.1f; //10% increase
             return traitModifiers;
         }
 

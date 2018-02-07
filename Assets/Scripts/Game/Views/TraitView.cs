@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Models;
 using UniRx;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,14 +16,14 @@ namespace Game.Views
         private Nation _nation0, _nation1;
         int shown = 0;
 
-        public List<Trait> CurrentDesignTraits;
+        public ReactiveCollection<Trait> CurrentDesignTraits;
 
         public void Bind(Company company, Nation nation0, Nation nation1)
         {
             _company = company;
             _nation0 = nation0;
             _nation1 = nation1;
-            CurrentDesignTraits = new List<Trait>();
+            CurrentDesignTraits = new ReactiveCollection<Trait>();
         }
 
         public void Show(WeaponType type)
@@ -42,7 +43,8 @@ namespace Game.Views
                     {
                         var d = Instantiate(DesignViewTemplate, DesignList.transform.Find("GridWithOurElements"));
                         d.GetComponentInChildren<Text>().text = _company.Tech.InfantryTraits[i].Name;
-                        if (CurrentDesignTraits.Exists(x => _company.Tech.InfantryTraits[i] == x))
+                        d.transform.GetChild(1).GetComponent<Text>().text = _company.Tech.InfantryTraits[i].Description;
+                        if (CurrentDesignTraits.AsSafeEnumerable().ToList().Exists(x => _company.Tech.InfantryTraits[i] == x))
                             d.GetComponent<Image>().color = Color.blue;
                         else
                             d.GetComponent<Image>().color = Color.white;
@@ -52,7 +54,7 @@ namespace Game.Views
                         b.GetComponent<Button>().onClick.AddListener(() =>
                         {
                             var trait = _company.Tech.InfantryTraits.Find(x => x.Name == b.GetComponentInChildren<Text>().text);
-                            if (!CurrentDesignTraits.Exists(x => trait == x))
+                            if (!CurrentDesignTraits.AsSafeEnumerable().ToList().Exists(x => trait == x))
                             {
                                 CurrentDesignTraits.Add(trait);
                                 d.GetComponent<Image>().color = Color.blue;
@@ -73,7 +75,7 @@ namespace Game.Views
                     {
                         var d = Instantiate(DesignViewTemplate, DesignList.transform.Find("GridWithOurElements"));
                         d.GetComponentInChildren<Text>().text = _company.Tech.TankTraits[i].Name;
-                        if (CurrentDesignTraits.Exists(x => _company.Tech.TankTraits[i] == x))
+                        if (CurrentDesignTraits.AsSafeEnumerable().ToList().Exists(x => _company.Tech.TankTraits[i] == x))
                             d.GetComponent<Image>().color = Color.blue;
                         else
                             d.GetComponent<Image>().color = Color.white;
@@ -82,9 +84,17 @@ namespace Game.Views
                         var b = d.GetComponent<Button>();
                         b.GetComponent<Button>().onClick.AddListener(() =>
                         {
-                            
-                            CurrentDesignTraits.Add(_company.Tech.TankTraits.Find(x=>x.Name == b.GetComponentInChildren<Text>().text));
-                            d.GetComponent<Image>().color = Color.blue;
+                            var trait = _company.Tech.TankTraits.Find(x => x.Name == b.GetComponentInChildren<Text>().text);
+                            if (!CurrentDesignTraits.AsSafeEnumerable().ToList().Exists(x => trait == x))
+                            {
+                                CurrentDesignTraits.Add(trait);
+                                d.GetComponent<Image>().color = Color.blue;
+                            }
+                            else
+                            {
+                                CurrentDesignTraits.Remove(trait);
+                                d.GetComponent<Image>().color = Color.white;
+                            }
                         });
                         //shown++;
                     }

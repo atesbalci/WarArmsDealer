@@ -31,7 +31,7 @@ namespace Game.Models
             for (var i = 0; i < Activities.Count; i++)
             {
                 var activity = Activities[i];
-                activity.Tick();
+                Activities[0].Tick();
                 if (activity.RemainingDuration <= 0)
                 {
                     Activities.RemoveAt(i);

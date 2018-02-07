@@ -8,7 +8,9 @@ namespace Game.Models
     {
         public RoundedArmor()
         {
-            Name = "Rounded Armor";
+            Name = "Rounded Armor:";
+            Description = "Rounded armor increases the armor by %10";
+            Complexity = 2;
         }
 
         public override float[] ApplyTrait(Weapon weapon, Nation weaponNation, Nation oppositeNation)
@@ -22,7 +24,7 @@ namespace Game.Models
                 traitModifiers[count] = val.Value;
                 count++;
             }
-            traitModifiers[(int)StatType.Armor] *= 1.25f; //10% increase
+            traitModifiers[2] *= 1.25f; //10% increase
 
 
 

@@ -117,6 +117,11 @@ namespace Game.Models {
                 default:
                     break;
             }
+            if(WeaponTraits.Count > 0)
+            foreach (var trait in WeaponTraits)
+            {
+                cost += trait.Complexity * 0.2f;
+            }
             return cost * 250f;
         }
 
@@ -141,6 +146,11 @@ namespace Game.Models {
                 default:
                     break;
             }
+            foreach(var trait in WeaponTraits)
+            {
+                duration += trait.Complexity * 0.2f;
+            }
+
             return Mathf.Pow(2f, duration/3.0f) * 5f;
         }
 

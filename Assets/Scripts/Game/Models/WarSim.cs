@@ -5,16 +5,54 @@ namespace Game.Models
     public class WarSim : ModelBase
     {
 
-        Nation[] _nations = new Nation[2];
+        public Nation[] _nations = new Nation[2];
+
+        static public WarSim Instance;
 
         public WarSim(Nation east, Nation west)
         {
             _nations[0] = east;
             _nations[1] = west;
+            Instance = this;
         }
+
+
 
         float[] eastModifier = new float[5];
         float[] westModifier = new float[5];
+
+        public float[] CalculateDesign(Weapon wep)
+        {
+
+            float[] result = wep[wep.GetStatTypes()].Select(r => ((float) r.Value)).ToArray();
+            Debug.Log("Length is :" + wep[wep.GetStatTypes()].Count());
+            float[] modifier = new float[5];
+            foreach(var trait in wep.WeaponTraits)
+            {
+                modifier = trait.ApplyTrait(wep, new Nation(), new Nation());
+            }
+            switch (wep.Type)
+            {
+                case WeaponType.Infantry:
+                    result[0] += modifier[0];
+                    result[1] += modifier[1];
+                    result[2] += modifier[2];
+                    break;
+                case WeaponType.Tank:
+                    result[0] += modifier[0];
+                    result[1] += modifier[1];
+                    result[3] += modifier[2];
+                    break;
+                case WeaponType.Artillery:
+                    result[0] += modifier[0];
+                    result[1] += modifier[1];
+                    result[4] += modifier[2];
+                    break;
+                default:
+                    break;
+            }
+            return result;
+        }
 
         void HandleTraits()
         {

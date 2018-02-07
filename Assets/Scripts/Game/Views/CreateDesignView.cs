@@ -27,29 +27,48 @@ namespace Game.Views
         private Weapon _newProject;
         private WeaponType _type;
         private GameObject _sliderPanel;
-
+        private bool _traits = false;
+        private List<Text> _sliderVals;
         public void Bind(Company company, Nation nation0, Nation nation1)
         {
 
 
             _traitView = GetComponent<TraitView>();
+            _sliderVals = new List<Text>();
+            _traitView.CurrentDesignTraits.ObserveCountChanged().Subscribe(x => { ShowDesign(); });
             _company = company;
             _nation0 = nation0;
             _nation1 = nation1;
-            _newProject = new Weapon();
+            _newProject = Weapon.CreateWeapon(WeaponType.Infantry, 1, 1, 1);
             stats = new List<Tuple<Stat, string>>();
 
-            bool traits = false;
+           
+           
+
+
             AddTraitButton.onClick.AddListener(() =>
             {
-                traits = !traits;
-
+                _traits = !_traits;
+                if (!_traits)
+                {
+                    AddTraitButton.GetComponentInChildren<Text>().text = "Show Traits";
+                    ShowDesign();
+                }
+                    
+                else
+                {
+                    ShowDesign();
+                    AddTraitButton.GetComponentInChildren<Text>().text = "Add Traits";
+                }
+                
+                    
                 TraitTemplate.SetActive(!TraitTemplate.activeInHierarchy);
                 _sliderPanel.SetActive(!_sliderPanel.activeInHierarchy);
                 _traitView.Show(_type);
                 //TypeTemplate.SetActive(!TypeTemplate.activeInHierarchy);
                 foreach (Toggle t in TypeTemplate.GetComponentsInChildren<Toggle>())
                 {
+                    
                     t.interactable = !t.interactable;
                 }
                 if(_traitView.CurrentDesignTraits.Count > 0)
@@ -73,7 +92,8 @@ namespace Game.Views
                 {
                     _newProject.WeaponTraits.Add(trait);
                 }
-                _traitView.CurrentDesignTraits = new List<Trait>();
+                _traitView.CurrentDesignTraits = new ReactiveCollection<Trait>();
+                
                 _company.CompanyDesigns.CreateDesignActivity(_newProject);
 
                 
@@ -87,6 +107,7 @@ namespace Game.Views
             {
                 t.onValueChanged.AddListener(toggle =>
                 {
+                    _curStats = new List<StatElement>();
                     if (toggle && _traitView.CurrentDesignTraits.Count == 0)
                         switch (t.name)
                         {
@@ -108,6 +129,7 @@ namespace Game.Views
                     {
                         stats = new List<Tuple<Stat, string>>();
                         Show();
+                        ShowDesign();
                     }
                     else
                     {
@@ -138,7 +160,7 @@ namespace Game.Views
             
 
             _newProject = Weapon.CreateWeapon(_type, 1, 1, 1);
-
+            stats = new List<Tuple<Stat, string>>();
             foreach (var stat in _newProject.Stats)
             {
                 stats.Add(new Tuple<Stat, string>(stat, System.Enum.GetName(typeof(StatType), stat.Type)));
@@ -149,7 +171,7 @@ namespace Game.Views
 
             _curStats = new List<StatElement>();
 
-
+            _sliderVals = new List<Text>();
             _sliderPanel = Instantiate(new GameObject("Sliders"), StatsParent);
             _sliderPanel.AddComponent<VerticalLayoutGroup>();
             _sliderPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 300f);
@@ -159,21 +181,27 @@ namespace Game.Views
                     var statView = Instantiate(StatsTemplate, _sliderPanel.transform, false).transform;
                     statView.Find("Text").GetComponent<Text>().text = stat.Item2;
                     var slider = statView.GetComponentInChildren<Slider>();
-                    slider.value = 0f;
+                    slider.value = 1f;
                     slider.maxValue = _company.Tech.Weapons[(int)_type].Stats[(int)stat.Item1.Type].Value;
                     var valueText = statView.Find("Value").GetComponent<Text>();
-                    valueText.text = "0";
+                    valueText.text = slider.value.ToString();
                     var statEle = new StatElement {
                         Stat = stat.Item1,
-                        Value = 0
+                        Value = 1
                     };
+                    _sliderVals.Add(valueText);
                     slider.onValueChanged.AddListener(fl =>
                     {
                         var val = Mathf.RoundToInt(fl);
-                        valueText.text = val.ToString();
+                        
+
+
+                        
+                        
                         statEle.Value = val;
 
-                        showDesign();
+
+                        ShowDesign();
 
 
                     });
@@ -191,9 +219,10 @@ namespace Game.Views
         private void OnEnable()
         {
             Show();
+            ShowDesign();
         }
 
-        void showDesign()
+        Weapon ShowDesign()
         {
 
             Weapon newDesign = new InfantryWeapon(new KeyValuePair<StatType, int>[3] {
@@ -201,7 +230,12 @@ namespace Game.Views
                             new KeyValuePair<StatType, int>(StatType.Health, _curStats[1].Value),
                             new KeyValuePair<StatType, int>(StatType.Support, _curStats[2].Value)
                         });
-            if(!Conditions.CanDesign(newDesign, _company))
+            //newDesign.WeaponTraits = _traitView.CurrentDesignTraits;
+            foreach(var trait in _traitView.CurrentDesignTraits)
+            {
+                newDesign.WeaponTraits.Add(trait);
+            }
+            if(!Conditions.CanDesign(newDesign, _company) || _traits)
             {
                 CreateDesignButton.interactable = false;
             }
@@ -209,8 +243,20 @@ namespace Game.Views
             {
                 CreateDesignButton.interactable = true;
             }
+            var modifiers = WarSim.Instance.CalculateDesign(newDesign);
+            Debug.Log(_sliderVals.Count);
+            Debug.Log(modifiers.Length);
+            for (int i=0;i<3;i++)
+            {
+                _sliderVals[i].text = modifiers[i].ToString();
+            }
+
             DesignCostText.text = "Duration: " + Mathf.CeilToInt(newDesign.GetDuration()) +
                         "\nCost: " + newDesign.GetCost();
+
+            
+
+            return newDesign;
         }
 
         private class StatElement
