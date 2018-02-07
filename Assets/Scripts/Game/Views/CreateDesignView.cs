@@ -44,6 +44,19 @@ namespace Game.Views
                 TraitTemplate.SetActive(!TraitTemplate.activeInHierarchy);
                 _sliderPanel.SetActive(!_sliderPanel.activeInHierarchy);
                 _traitView.Show(_type);
+                //TypeTemplate.SetActive(!TypeTemplate.activeInHierarchy);
+                foreach (Toggle t in TypeTemplate.GetComponentsInChildren<Toggle>())
+                {
+                    t.interactable = !t.interactable;
+                }
+                if(_traitView.CurrentDesignTraits.Count > 0)
+                {
+                    foreach (Toggle t in TypeTemplate.GetComponentsInChildren<Toggle>())
+                    {
+                        t.interactable = false;
+                    }
+                }
+
             });
             CreateDesignButton.onClick.AddListener(() => 
             {
@@ -53,6 +66,11 @@ namespace Game.Views
                     stat.Stat.Value = stat.Value;
                 }
 
+                foreach(var trait in _traitView.CurrentDesignTraits)
+                {
+                    _newProject.WeaponTraits.Add(trait);
+                }
+                _traitView.CurrentDesignTraits = new List<Trait>();
                 _company.CompanyDesigns.CreateDesignActivity(_newProject);
 
                 gameObject.SetActive(false);
@@ -61,10 +79,9 @@ namespace Game.Views
             TypeTemplate.SetActive(true);
             foreach (Toggle t in TypeTemplate.GetComponentsInChildren<Toggle>())
             {
-
                 t.onValueChanged.AddListener(toggle =>
                 {
-                    if (toggle)
+                    if (toggle && _traitView.CurrentDesignTraits.Count == 0)
                         switch (t.name)
                         {
                             case "Infantry":

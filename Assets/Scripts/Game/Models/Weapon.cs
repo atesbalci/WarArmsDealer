@@ -161,6 +161,10 @@ namespace Game.Models {
                 default:
                     break;
             }
+            foreach(var trait in WeaponTraits)
+            {
+                result += " \"" + trait.Name + "\"";
+            }
             return result;
         }
 
