@@ -100,6 +100,33 @@ namespace Game.Views
                     }
                     break;
                 case WeaponType.Artillery:
+                    for (int i = 0; i < _company.Tech.ArtilleryTraits.Count; i++)
+                    {
+                        var d = Instantiate(DesignViewTemplate, DesignList.transform.Find("GridWithOurElements"));
+                        d.GetComponentInChildren<Text>().text = _company.Tech.ArtilleryTraits[i].Name;
+                        if (CurrentDesignTraits.AsSafeEnumerable().ToList().Exists(x => _company.Tech.ArtilleryTraits[i] == x))
+                            d.GetComponent<Image>().color = Color.blue;
+                        else
+                            d.GetComponent<Image>().color = Color.white;
+                        d.SetActive(true);
+                        d.transform.SetAsFirstSibling();
+                        var b = d.GetComponent<Button>();
+                        b.GetComponent<Button>().onClick.AddListener(() =>
+                        {
+                            var trait = _company.Tech.ArtilleryTraits.Find(x => x.Name == b.GetComponentInChildren<Text>().text);
+                            if (!CurrentDesignTraits.AsSafeEnumerable().ToList().Exists(x => trait == x))
+                            {
+                                CurrentDesignTraits.Add(trait);
+                                d.GetComponent<Image>().color = Color.blue;
+                            }
+                            else
+                            {
+                                CurrentDesignTraits.Remove(trait);
+                                d.GetComponent<Image>().color = Color.white;
+                            }
+                        });
+                        //shown++;
+                    }
                     break;
                 default:
                     break;

@@ -22,7 +22,10 @@ namespace Game.Models
             TechLevel = 1;
             DesignLevel = 1;
 
-            LoadTraits();
+            //LoadTraits();
+            InfantryTraits = new List<Trait>();
+            TankTraits = new List<Trait>();
+            ArtilleryTraits = new List<Trait>();
             var statCnt = Enum.GetValues(typeof(StatType)).Length;
 
             Weapons = new Weapon[System.Enum.GetNames(typeof(WeaponType)).Length];
@@ -56,9 +59,7 @@ namespace Game.Models
 
         void LoadTraits()
         {
-            InfantryTraits = new List<Trait>();
-            TankTraits = new List<Trait>();
-            ArtilleryTraits = new List<Trait>();
+           
 
             //Infantry
             InfantryTraits.Add(new Engineer());
@@ -66,6 +67,48 @@ namespace Game.Models
             //Tank
             TankTraits.Add(new RoundedArmor());
             TankTraits.Add(new TungstenRounds());
+        }
+
+
+        public void UnlockTrait(WeaponType type, int level)
+        {
+            var levelOffset = 2; //If levels start at 3 it has to be 2 etc.
+            switch (type)
+            {
+                case WeaponType.Infantry:
+
+                    if(level==levelOffset+levelOffset+2)
+                        InfantryTraits.Add(new LightInfantry());
+                    if(level==levelOffset+3)
+                        InfantryTraits.Add(new SurvivalKits());
+                    if (level==levelOffset+ 5)
+                        InfantryTraits.Add(new RainnproofGear());
+                    if (level==levelOffset+ 6)
+                        InfantryTraits.Add(new SemiAutomatic());
+                    if (level==levelOffset+ 8)
+                        InfantryTraits.Add(new Engineer());
+                    if (level==levelOffset+ 9)
+                        InfantryTraits.Add(new FullAutomatic());
+                    break;
+                case WeaponType.Tank:
+                    if (level==levelOffset+ 3)
+                        TankTraits.Add(new CastEngine());
+                    if (level==levelOffset+ 4)
+                        TankTraits.Add(new SteelPlating());
+                    if (level==levelOffset+ 6)
+                        TankTraits.Add(new LightChasis());
+                    if (level==levelOffset+ 7)
+                        TankTraits.Add(new ArmorSkirts());
+                    if (level==levelOffset+ 9)
+                        TankTraits.Add(new RoundedArmor());
+                    if (level==levelOffset+ 10)
+                        TankTraits.Add(new RepairCorps());
+                    break;
+                case WeaponType.Artillery:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

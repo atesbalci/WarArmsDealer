@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace Game.Models
 {
-    public class CastEngine : Trait
+    public class LightChasis : Trait
     {
-        public CastEngine()
+        public LightChasis()
         {
-            Name = "Cast Engine Manifold:";
-            Description = " Increases attack by the 10% of the health";
-            Complexity = 1;
+            Name = "Light Chassis:";
+            Description = "If base health is below 10, it gives %5 increase per health below 10";
+            Complexity = 3;
         }
 
         public override float[] ApplyTrait(Weapon weapon, Nation weaponNation, Nation oppositeNation)
@@ -24,7 +24,7 @@ namespace Game.Models
                 traitModifiers[count] = val.Value;
                 count++;
             }
-            traitModifiers[0] += traitModifiers[1] * 0.1f; //10% increase
+            traitModifiers[0] *= 1f+(10-traitModifiers[1])*0.05f; //10% increase
 
 
 

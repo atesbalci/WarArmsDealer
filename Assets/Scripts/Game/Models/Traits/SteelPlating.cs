@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace Game.Models
 {
-    public class CastEngine : Trait
+    public class SteelPlating : Trait
     {
-        public CastEngine()
+        public SteelPlating()
         {
-            Name = "Cast Engine Manifold:";
-            Description = " Increases attack by the 10% of the health";
-            Complexity = 1;
+            Name = "Steel Plating:";
+            Description = "Increases armor by 25% but decreases attack by 10%";
+            Complexity = 2;
         }
 
         public override float[] ApplyTrait(Weapon weapon, Nation weaponNation, Nation oppositeNation)
@@ -24,8 +24,8 @@ namespace Game.Models
                 traitModifiers[count] = val.Value;
                 count++;
             }
-            traitModifiers[0] += traitModifiers[1] * 0.1f; //10% increase
-
+            traitModifiers[0] *= 0.9f; //10% increase
+            traitModifiers[2] *= 1.25f;
 
 
             return traitModifiers;

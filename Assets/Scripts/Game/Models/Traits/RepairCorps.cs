@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace Game.Models
 {
-    public class CastEngine : Trait
+    public class RepairCorps : Trait
     {
-        public CastEngine()
+        public RepairCorps()
         {
-            Name = "Cast Engine Manifold:";
-            Description = " Increases attack by the 10% of the health";
-            Complexity = 1;
+            Name = "Repair Corps:";
+            Description = "Increases armor by 33%";
+            Complexity = 3;
         }
 
         public override float[] ApplyTrait(Weapon weapon, Nation weaponNation, Nation oppositeNation)
@@ -24,7 +24,8 @@ namespace Game.Models
                 traitModifiers[count] = val.Value;
                 count++;
             }
-            traitModifiers[0] += traitModifiers[1] * 0.1f; //10% increase
+
+                traitModifiers[2] *= 1.33f;
 
 
 

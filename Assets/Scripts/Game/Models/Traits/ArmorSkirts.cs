@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace Game.Models
 {
-    public class CastEngine : Trait
+    public class ArmorSkirts : Trait
     {
-        public CastEngine()
+        public ArmorSkirts()
         {
-            Name = "Cast Engine Manifold:";
-            Description = " Increases attack by the 10% of the health";
-            Complexity = 1;
+            Name = "Armor skirts:";
+            Description = "Increases armor by 50% with %25 of chance each battle";
+            Complexity = 2;
         }
 
         public override float[] ApplyTrait(Weapon weapon, Nation weaponNation, Nation oppositeNation)
@@ -24,8 +24,11 @@ namespace Game.Models
                 traitModifiers[count] = val.Value;
                 count++;
             }
-            traitModifiers[0] += traitModifiers[1] * 0.1f; //10% increase
+            if (Random.value >= 0.75f)
+            {
+                traitModifiers[2] *= 1.5f;
 
+            }
 
 
             return traitModifiers;
