@@ -25,28 +25,30 @@ namespace Game.Models
         {
 
             float[] result = wep[wep.GetStatTypes()].Select(r => ((float) r.Value)).ToArray();
-            Debug.Log("Length is :" + wep[wep.GetStatTypes()].Count());
-            float[] modifier = new float[5];
+            
+            float[] modifier = new float[3];
             foreach(var trait in wep.WeaponTraits)
             {
-                modifier = trait.ApplyTrait(wep, new Nation(), new Nation());
+                var temp = trait.ApplyTrait(wep, new Nation(), new Nation());
+                Debug.Log("Length is :" + temp.Length);
+                modifier = modifier.Select((x, index) => x + temp[index]).ToArray();
             }
             switch (wep.Type)
             {
                 case WeaponType.Infantry:
-                    result[0] += modifier[0];
-                    result[1] += modifier[1];
-                    result[2] += modifier[2];
+                    result[0] = modifier[0];
+                    result[1] = modifier[1];
+                    result[2] = modifier[2];
                     break;
                 case WeaponType.Tank:
-                    result[0] += modifier[0];
-                    result[1] += modifier[1];
-                    result[3] += modifier[2];
+                    result[0] = modifier[0];
+                    result[1] = modifier[1];
+                    result[2] = modifier[2];
                     break;
                 case WeaponType.Artillery:
-                    result[0] += modifier[0];
-                    result[1] += modifier[1];
-                    result[4] += modifier[2];
+                    result[0] = modifier[0];
+                    result[1] = modifier[1];
+                    result[2] = modifier[2];
                     break;
                 default:
                     break;
@@ -121,8 +123,13 @@ namespace Game.Models
 
         }
         
-        public void SimulateBattle(float combatWidth)
-        {
+        public void SimulateBattle(float combatWidth) {
+            //OldSim(combatWidth);
+
+            NewSim(combatWidth);
+        }
+
+        private void OldSim(float combatWidth) {
             float healthEast = 0f;
             float attackEast = 0f;
             float healthWest = 0f;
@@ -132,8 +139,7 @@ namespace Game.Models
 
             HandleTraits();
 
-            for (int i=0;i<3;i++)
-            {
+            for (int i = 0; i < 3; i++) {
 
                 healthEast += _nations[0].Weapons[i][StatType.Health].Value;
                 healthWest += _nations[1].Weapons[i][StatType.Health].Value;
@@ -162,8 +168,7 @@ namespace Game.Models
             float supportRandEast = (attackEast + healthEast) / Mathf.Max((supportEast * 6f), 1);
             float supportRandWest = (attackWest + healthWest) / Mathf.Max((supportWest * 6f), 1);
 
-            while (healthEast > 0f && healthWest > 0f)
-            {
+            while (healthEast > 0f && healthWest > 0f) {
                 healthEast -= Mathf.Max((attackWest - Random.Range(0f, supportRandEast * 2f) - leftArmorWest) * 0.1f, Random.Range(0f, supportRandEast * 0.1f));
                 healthWest -= Mathf.Max((attackEast - Random.Range(0f, supportRandWest * 2f) - leftArmorEast) * 0.1f, Random.Range(0f, supportRandWest * 0.1f));
             }
@@ -173,6 +178,69 @@ namespace Game.Models
 
             Debug.Log(_nations[0].Name + leftArmorEast);
             Debug.Log(_nations[1].Name + leftArmorWest);
+
+            /*if(leftHealth>rightHealth)
+            {
+                Debug.Log("<color=red>"+ _nations[0].Name + "</color> has won");
+            }
+            else
+            {
+                Debug.Log("<color=red>" + _nations[1].Name + "</color> has won");
+            }*/
+
+            _nations[0].Manpower -= (1 - healthEast / startHealthEast) * combatWidth * 10;
+            _nations[1].Manpower -= (1 - healthWest / startHealthWest) * combatWidth * 10;
+
+            //Debug.Log(_nations[0].Name + " Remaining manpower: " + _nations[0].Manpower);
+            //Debug.Log(_nations[1].Name + " Remaining manpower: " + _nations[1].Manpower);
+        }
+
+        private void NewSim(float combatWidth) {
+            float healthEast = 0f;
+            float attackEast = 0f;
+            float healthWest = 0f;
+            float attackWest = 0f;
+
+            float startHealthEast = 0f, startHealthWest = 0f;
+
+            HandleTraits();
+
+            for (int i = 0; i < 3; i++) {
+
+                healthEast += _nations[0].Weapons[i][StatType.Health].Value;
+                healthWest += _nations[1].Weapons[i][StatType.Health].Value;
+                attackEast += _nations[0].Weapons[i][StatType.Attack].Value;
+                attackWest += _nations[1].Weapons[i][StatType.Attack].Value;
+
+                startHealthEast = healthEast;
+                startHealthWest = healthWest;
+            }
+
+            healthEast -= Mathf.Min(_nations[0].Weapons[(int)WeaponType.Tank].Stats[(int)StatType.Armor].Value, _nations[1].Weapons[(int)WeaponType.Artillery].Stats[(int)StatType.Piercing].Value);
+            healthWest -= Mathf.Min(_nations[1].Weapons[(int)WeaponType.Tank].Stats[(int)StatType.Armor].Value, _nations[0].Weapons[(int)WeaponType.Artillery].Stats[(int)StatType.Piercing].Value);
+
+            float supportEast = _nations[0].CurrentInfantry[StatType.Support].Value;
+            float supportWest = _nations[1].CurrentInfantry[StatType.Support].Value;
+
+            attackEast += eastModifier[0];
+            attackWest += westModifier[0];
+
+            healthEast += eastModifier[1];
+            healthWest += westModifier[1];
+
+            supportEast += eastModifier[2];
+            supportWest += westModifier[2];
+
+            float supportRandEast = (attackEast + healthEast) / Mathf.Max((supportEast * 6f), 1);
+            float supportRandWest = (attackWest + healthWest) / Mathf.Max((supportWest * 6f), 1);
+
+            while (healthEast > 0f && healthWest > 0f) {
+                healthEast -= Mathf.Max((attackWest - Random.Range(0f, supportRandEast * 2f)) * 0.1f / _nations[0].Weapons[(int)WeaponType.Tank].Stats[(int)StatType.Armor].Value, Random.Range(0f, supportRandEast * 0.1f));
+                healthWest -= Mathf.Max((attackEast - Random.Range(0f, supportRandWest * 2f)) * 0.1f / _nations[1].Weapons[(int)WeaponType.Tank].Stats[(int)StatType.Armor].Value, Random.Range(0f, supportRandWest * 0.1f));
+            }
+
+            healthEast = Mathf.Max(0f, healthEast);
+            healthWest = Mathf.Max(0f, healthWest);
 
             /*if(leftHealth>rightHealth)
             {
