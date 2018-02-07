@@ -12,14 +12,14 @@ namespace Game.Models
     {
         private Company _playerCompany;
 
-        public List<Weapon> CompletedDesigns;
+        public ReactiveCollection<Weapon> CompletedDesigns;
 
         public int BaseDesignTime = 3;
 
 
         public Design(Company playerCompany)
         {
-            CompletedDesigns = new List<Weapon>();
+            CompletedDesigns = new ReactiveCollection<Weapon>();
             _playerCompany = playerCompany;
             Debug.Log("Subscribed");
             MessageManager.Receive<DesignCompleteEvent>().Subscribe(ev => {designComplete(ev.DesignActivity); });

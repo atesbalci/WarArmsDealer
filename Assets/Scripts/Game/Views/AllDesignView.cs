@@ -23,6 +23,7 @@ namespace Game.Views
             _nation0 = nation0;
             _nation1 = nation1;
 
+            _company.CompanyDesigns.CompletedDesigns.ObserveAdd().Subscribe(x => { Show(); });
 
             var create = Instantiate(DesignViewTemplate, DesignList.transform.Find("GridWithOurElements"));
             create.GetComponentInChildren<Text>().text = "Create New Design";

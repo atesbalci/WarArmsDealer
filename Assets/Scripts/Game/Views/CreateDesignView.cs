@@ -8,6 +8,7 @@ namespace Game.Views
 {
     public class CreateDesignView : MonoBehaviour
     {
+
         public Transform StatsParent;
         public Text Header;
         public Button SellToLeftButton, CreateDesignButton;
@@ -29,6 +30,8 @@ namespace Game.Views
 
         public void Bind(Company company, Nation nation0, Nation nation1)
         {
+
+
             _traitView = GetComponent<TraitView>();
             _company = company;
             _nation0 = nation0;
@@ -73,8 +76,11 @@ namespace Game.Views
                 _traitView.CurrentDesignTraits = new List<Trait>();
                 _company.CompanyDesigns.CreateDesignActivity(_newProject);
 
+                
+                transform.parent.Find("AllDesignPanel").gameObject.SetActive(true);
                 gameObject.SetActive(false);
-                transform.parent.gameObject.SetActive(false);
+                //transform.SetAsFirstSibling();
+                //transform.parent.gameObject.SetActive(false);
             });
             TypeTemplate.SetActive(true);
             foreach (Toggle t in TypeTemplate.GetComponentsInChildren<Toggle>())
