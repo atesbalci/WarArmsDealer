@@ -15,8 +15,12 @@ namespace Game.Models
         public List<Trait> TankTraits;
         public List<Trait> ArtilleryTraits;
 
-        public Technology()
-        {
+        public int TechLevel, DesignLevel;
+
+        public Technology() {
+
+            TechLevel = 1;
+            DesignLevel = 1;
 
             LoadTraits();
             var statCnt = Enum.GetValues(typeof(StatType)).Length;

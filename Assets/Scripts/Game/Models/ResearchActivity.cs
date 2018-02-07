@@ -1,4 +1,5 @@
 ﻿using Utils;
+using System;
 
 namespace Game.Models
 {
@@ -23,7 +24,7 @@ namespace Game.Models
 
         public override string ToString()
         {
-            return Research.Weapon.ToString();
+            return Research.ResearchType == ResearchType.Stat ? Research.Weapon.ToString() : Enum.GetName(typeof(ResearchType), Research.ResearchType) + Research.Weapon.Stats[0].Value;
         }
     }
 }

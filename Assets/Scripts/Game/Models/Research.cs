@@ -2,18 +2,29 @@
 
 namespace Game.Models
 {
+    public enum ResearchType {
+        Stat,
+        Design,
+        Tech
+    }
+
     public class Research : ModelBase
     {
         public Weapon Weapon { get; set; }
         public StatType StatType { get; set; }
+        public ResearchType ResearchType { get; set; }
 
         public Research(Weapon weapon) {
             this.Weapon = weapon;
+            this.ResearchType = ResearchType.Stat;
         }
 
-        public Research(Weapon weapon, StatType p_StatType) {
-            this.Weapon = weapon;
+        public Research(Weapon weapon, StatType p_StatType) : this(weapon){
             this.StatType = p_StatType;
+        }
+
+        public Research(Weapon weapon, ResearchType p_ResearchType) : this(weapon) {
+            this.ResearchType = p_ResearchType;
         }
 
         /// <inheritdoc />
