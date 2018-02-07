@@ -25,28 +25,30 @@ namespace Game.Models
         {
 
             float[] result = wep[wep.GetStatTypes()].Select(r => ((float) r.Value)).ToArray();
-            Debug.Log("Length is :" + wep[wep.GetStatTypes()].Count());
-            float[] modifier = new float[5];
+            
+            float[] modifier = new float[3];
             foreach(var trait in wep.WeaponTraits)
             {
-                modifier = trait.ApplyTrait(wep, new Nation(), new Nation());
+                var temp = trait.ApplyTrait(wep, new Nation(), new Nation());
+                Debug.Log("Length is :" + temp.Length);
+                modifier = modifier.Select((x, index) => x + temp[index]).ToArray();
             }
             switch (wep.Type)
             {
                 case WeaponType.Infantry:
-                    result[0] += modifier[0];
-                    result[1] += modifier[1];
-                    result[2] += modifier[2];
+                    result[0] = modifier[0];
+                    result[1] = modifier[1];
+                    result[2] = modifier[2];
                     break;
                 case WeaponType.Tank:
-                    result[0] += modifier[0];
-                    result[1] += modifier[1];
-                    result[3] += modifier[2];
+                    result[0] = modifier[0];
+                    result[1] = modifier[1];
+                    result[2] = modifier[2];
                     break;
                 case WeaponType.Artillery:
-                    result[0] += modifier[0];
-                    result[1] += modifier[1];
-                    result[4] += modifier[2];
+                    result[0] = modifier[0];
+                    result[1] = modifier[1];
+                    result[2] = modifier[2];
                     break;
                 default:
                     break;
