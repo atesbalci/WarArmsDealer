@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine;
 using UniRx;
+using UnityEngine.EventSystems;
 using Utils.ViewHelpers;
 
 namespace Game.Views {
@@ -41,18 +42,20 @@ namespace Game.Views {
 
             WeaponDesignButton.onClick.AddListener(() => {
                 WeaponDesignView.gameObject.GetComponent<PanelGroupElement>().Toggle();
+                EventSystem.current.SetSelectedGameObject(null);
 
                 //WeaponDesignView.CreateDesignView.gameObject.SetActive(!WeaponDesignView.gameObject.activeInHierarchy);
             });
 
             ReseachViewButton.onClick.AddListener(() => {
                 ResearchView.GetComponent<PanelGroupElement>().Toggle();
+                EventSystem.current.SetSelectedGameObject(null);
             });
 
             SalesViewButton.onClick.AddListener(() => {
                 SalesView.GetComponent<PanelGroupElement>().Toggle();
                 SalesView.Show();
-                
+                EventSystem.current.SetSelectedGameObject(null);
             });
         }
 
