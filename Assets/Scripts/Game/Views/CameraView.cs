@@ -43,7 +43,6 @@ namespace Game.Views
             var target = _spotValues.First(x => x.SpotType == spot).Transform;
             _tweenSequence = DOTween.Sequence();
             _tweenSequence.Append(transform.DOMove(init.position, 0.5f));
-            _tweenSequence.Join(transform.DORotateQuaternion(init.rotation, 0.5f));
             _tweenSequence.Append(transform.DORotateQuaternion(target.rotation, 0.5f));
             _tweenSequence.Append(transform.DOMove(target.position, 0.5f));
             _tweenSequence.onComplete = () => completeCallback();
