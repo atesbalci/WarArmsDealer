@@ -4,9 +4,11 @@ using UnityEngine;
 
 namespace Game.Models
 {
+    
     public abstract class Trait : ModelBase
     {
-        
+        public string Name;
+        public string Description;    
         public abstract float[] ApplyTrait(Weapon weapon, Nation weaponNation, Nation oppositeNation);
         protected float[] GetNationPowers(Nation nation)
         {

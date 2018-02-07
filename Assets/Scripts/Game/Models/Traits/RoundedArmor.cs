@@ -6,9 +6,14 @@ namespace Game.Models
 {
     public class RoundedArmor : Trait
     {
+        public RoundedArmor()
+        {
+            Name = "Rounded Armor";
+        }
 
         public override float[] ApplyTrait(Weapon weapon, Nation weaponNation, Nation oppositeNation)
         {
+            
             Debug.Assert(weapon.Type == WeaponType.Tank);
             float[] traitModifiers = new float[3];
             int count = 0;

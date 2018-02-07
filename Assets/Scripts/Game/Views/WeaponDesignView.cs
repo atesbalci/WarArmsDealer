@@ -18,6 +18,7 @@ namespace Game.Views
 
         public CreateDesignView CreateDesignView;
         public AllDesignView AllDesignView;
+        public TraitView TraitView;
         //private List<StatElement> _curStats;
 
         private void OnEnable()
@@ -31,6 +32,7 @@ namespace Game.Views
             _nation0 = nation0;
             _nation1 = nation1;
 
+            TraitView.Bind(company, nation0, nation1);
             CreateDesignView.Bind(company, nation0, nation1);
             AllDesignView.Bind(company, nation0, nation1);
             AllDesignView.gameObject.SetActive(true);

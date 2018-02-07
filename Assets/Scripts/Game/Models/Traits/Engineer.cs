@@ -6,8 +6,15 @@ namespace Game.Models
 {
     public class Engineer : Trait
     {
+        
+        public Engineer()
+        {
+            Name = "Engineers";
+        }
+
         public override float[] ApplyTrait(Weapon weapon, Nation weaponNation, Nation oppositeNation)
         {
+            
             Debug.Assert(weapon.Type == WeaponType.Infantry);
             float[] traitModifiers = new float[3];
             int count = 0;

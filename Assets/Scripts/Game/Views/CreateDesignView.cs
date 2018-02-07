@@ -15,6 +15,9 @@ namespace Game.Views
         [Space(10)]
         public GameObject StatsTemplate;
         public GameObject TypeTemplate;
+        public GameObject TraitTemplate;
+        public Button AddTraitButton;
+        private TraitView _traitView;
 
         private Company _company;
         private Nation _nation0, _nation1;
@@ -22,15 +25,26 @@ namespace Game.Views
         private List<Tuple<Stat, string>> stats; 
         private Weapon _newProject;
         private WeaponType _type;
-
+        private GameObject _sliderPanel;
 
         public void Bind(Company company, Nation nation0, Nation nation1)
         {
+            _traitView = GetComponent<TraitView>();
             _company = company;
             _nation0 = nation0;
             _nation1 = nation1;
             _newProject = new Weapon();
             stats = new List<Tuple<Stat, string>>();
+
+            bool traits = false;
+            AddTraitButton.onClick.AddListener(() =>
+            {
+                traits = !traits;
+
+                TraitTemplate.SetActive(!TraitTemplate.activeInHierarchy);
+                _sliderPanel.SetActive(!_sliderPanel.activeInHierarchy);
+                _traitView.Show(_type);
+            });
             CreateDesignButton.onClick.AddListener(() => 
             {
                 if (_curStats == null)
@@ -66,10 +80,17 @@ namespace Game.Views
 
                         }
 
-                    stats = new List<Tuple<Stat, string>>();
 
-
-                    Show();
+                    if(!TraitTemplate.activeInHierarchy)
+                    {
+                        stats = new List<Tuple<Stat, string>>();
+                        Show();
+                    }
+                    else
+                    {
+                        _traitView.Show(_type);
+                    }
+                    
 
                 });
             }
@@ -84,7 +105,7 @@ namespace Game.Views
 
             foreach (Transform child in StatsParent)
             {
-                if (child.gameObject != StatsTemplate && child.gameObject != TypeTemplate)
+                if (child.gameObject != StatsTemplate && child.gameObject != TypeTemplate && child.gameObject != TraitTemplate)
                 {
                     Destroy(child.gameObject);
                 }
@@ -95,24 +116,28 @@ namespace Game.Views
 
             _newProject = Weapon.CreateWeapon(_type, 1, 1, 1);
 
-            stats = new List<Tuple<Stat, string>>();
-
-            foreach (var stat in _newProject.Stats) {
+            foreach (var stat in _newProject.Stats)
+            {
                 stats.Add(new Tuple<Stat, string>(stat, System.Enum.GetName(typeof(StatType), stat.Type)));
             }
 
 
+
+
             _curStats = new List<StatElement>();
-            
-            
+
+
+            _sliderPanel = Instantiate(new GameObject("Sliders"), StatsParent);
+            _sliderPanel.AddComponent<VerticalLayoutGroup>();
+            _sliderPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 300f);
             foreach (var stat in stats)
             {
                 if (stat.Item1.Value != 0) {
-                    var statView = Instantiate(StatsTemplate, StatsParent, false).transform;
+                    var statView = Instantiate(StatsTemplate, _sliderPanel.transform, false).transform;
                     statView.Find("Text").GetComponent<Text>().text = stat.Item2;
                     var slider = statView.GetComponentInChildren<Slider>();
                     slider.value = 0f;
-                    slider.maxValue = _company.Tech.Weapons[(int)_type][stat.Item1.Type].Value;
+                    slider.maxValue = _company.Tech.Weapons[(int)_type].Stats[(int)stat.Item1.Type].Value;
                     var valueText = statView.Find("Value").GetComponent<Text>();
                     valueText.text = "0";
                     var statEle = new StatElement {

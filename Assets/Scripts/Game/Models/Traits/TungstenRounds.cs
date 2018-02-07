@@ -6,11 +6,14 @@ namespace Game.Models
 {
     public class TungstenRounds : Trait
     {
-
-
+        public TungstenRounds()
+        {
+            Name = "Tungsten Rounds";
+        }
 
         public override float[] ApplyTrait(Weapon weapon, Nation weaponNation, Nation oppositeNation)
         {
+            
             Debug.Assert(weapon.Type == WeaponType.Tank);
             float[] traitModifiers = new float[3];
             int count = 0;

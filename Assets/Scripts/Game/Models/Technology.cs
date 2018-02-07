@@ -11,8 +11,14 @@ namespace Game.Models
         public List<Research> Researches;
         public Weapon[] Weapons;
 
+        public List<Trait> InfantryTraits;
+        public List<Trait> TankTraits;
+        public List<Trait> ArtilleryTraits;
+
         public Technology()
         {
+
+            LoadTraits();
             var statCnt = Enum.GetValues(typeof(StatType)).Length;
 
             Weapons = new Weapon[System.Enum.GetNames(typeof(WeaponType)).Length];
@@ -42,6 +48,20 @@ namespace Game.Models
                 Weapons[(int) research.Weapon.Type].Stats[i].Value
                     = Mathf.Max(Weapons[(int) research.Weapon.Type].Stats[i].Value, research.Weapon.Stats[i].Value);
             }
+        }
+
+        void LoadTraits()
+        {
+            InfantryTraits = new List<Trait>();
+            TankTraits = new List<Trait>();
+            ArtilleryTraits = new List<Trait>();
+
+            //Infantry
+            InfantryTraits.Add(new Engineer());
+
+            //Tank
+            TankTraits.Add(new RoundedArmor());
+            TankTraits.Add(new TungstenRounds());
         }
     }
 }
