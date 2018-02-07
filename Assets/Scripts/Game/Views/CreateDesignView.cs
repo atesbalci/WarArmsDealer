@@ -3,6 +3,7 @@ using Game.Models;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 namespace Game.Views
 {
@@ -68,7 +69,6 @@ namespace Game.Views
                 //TypeTemplate.SetActive(!TypeTemplate.activeInHierarchy);
                 foreach (Toggle t in TypeTemplate.GetComponentsInChildren<Toggle>())
                 {
-                    
                     t.interactable = !t.interactable;
                 }
                 if(_traitView.CurrentDesignTraits.Count > 0)
@@ -225,11 +225,8 @@ namespace Game.Views
         Weapon ShowDesign()
         {
 
-            Weapon newDesign = new InfantryWeapon(new KeyValuePair<StatType, int>[3] {
-                            new KeyValuePair<StatType, int>(StatType.Attack, _curStats[0].Value),
-                            new KeyValuePair<StatType, int>(StatType.Health, _curStats[1].Value),
-                            new KeyValuePair<StatType, int>(StatType.Support, _curStats[2].Value)
-                        });
+            Weapon newDesign = Weapon.CreateWeapon(_type, _curStats[0].Value, _curStats[1].Value, _curStats[2].Value);
+
             //newDesign.WeaponTraits = _traitView.CurrentDesignTraits;
             foreach(var trait in _traitView.CurrentDesignTraits)
             {
@@ -243,9 +240,12 @@ namespace Game.Views
             {
                 CreateDesignButton.interactable = true;
             }
-            var modifiers = WarSim.Instance.CalculateDesign(newDesign);
-            Debug.Log(_sliderVals.Count);
-            Debug.Log(modifiers.Length);
+            
+            float[] modifiers;
+            if (newDesign.WeaponTraits.Count > 0)
+                modifiers = WarSim.Instance.CalculateDesign(newDesign);
+            else
+                modifiers = newDesign[newDesign.GetStatTypes()].Select(r => ((float)r.Value)).ToArray();
             for (int i=0;i<3;i++)
             {
                 _sliderVals[i].text = modifiers[i].ToString();
