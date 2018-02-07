@@ -34,5 +34,13 @@ namespace Utils.ViewHelpers
                 }
             }
         }
+
+        public void HideAll()
+        {
+            foreach (var panel in Panels)
+            {
+                panel.Active = false;
+            }
+        }
     }
 }

@@ -28,6 +28,10 @@ namespace Game.Views {
         public ResearchView ResearchView;
         public ActivitiesView ActivitiesView;
         public SalesView SalesView;
+        public CameraView CameraView;
+
+        [Header("PanelGroup")]
+        public PanelGroup PanelGroup;
 
         public void Bind(Nation p_Nation0, Nation p_Nation1, Company p_Company) {
             _nation0 = p_Nation0;
@@ -41,22 +45,33 @@ namespace Game.Views {
             SalesView.Bind(_company, _nation0, _nation1);
 
             WeaponDesignButton.onClick.AddListener(() => {
-                WeaponDesignView.gameObject.GetComponent<PanelGroupElement>().Toggle();
+                PanelGroup.HideAll();
+                CameraView.Move(CameraSpotType.Design, () =>
+                {
+                    WeaponDesignView.gameObject.GetComponent<PanelGroupElement>().Toggle();
+                });
                 EventSystem.current.SetSelectedGameObject(null);
-
-                //WeaponDesignView.CreateDesignView.gameObject.SetActive(!WeaponDesignView.gameObject.activeInHierarchy);
             });
 
             ReseachViewButton.onClick.AddListener(() => {
-                ResearchView.GetComponent<PanelGroupElement>().Toggle();
+                PanelGroup.HideAll();
+                CameraView.Move(CameraSpotType.Research, () =>
+                {
+                    ResearchView.GetComponent<PanelGroupElement>().Toggle();
+                });
                 EventSystem.current.SetSelectedGameObject(null);
             });
 
             SalesViewButton.onClick.AddListener(() => {
-                SalesView.GetComponent<PanelGroupElement>().Toggle();
-                SalesView.Show();
+                PanelGroup.HideAll();
+                CameraView.Move(CameraSpotType.Sale, () =>
+                {
+                    SalesView.GetComponent<PanelGroupElement>().Toggle();
+                    SalesView.Show();
+                });
                 EventSystem.current.SetSelectedGameObject(null);
             });
+            CameraView.Init();
         }
 
         public void UpdateWarState(float p_WarProgress) {
