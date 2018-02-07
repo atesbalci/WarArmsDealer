@@ -26,7 +26,27 @@ namespace Game.Views {
 
             RefreshUi();
 
-            int lastStatIndex = 0;
+            GetComponent<Button>().onClick.AddListener(
+                () => {
+                    if (_canResearch) {
+                        Weapon tempWeapon = _company.Tech.Weapons[(int)_weaponType].Copy();
+
+                        foreach (Stat t in tempWeapon.Stats) {
+                            if (t.Value != 0) {
+                                tempWeapon.AddStat(t.Type, 1);
+                            }
+                        }
+
+                        _researchActivity = new ResearchActivity(new Research(tempWeapon));
+                        _company.AddResearch(_researchActivity);
+                        _subscription = MessageManager.Receive<ResearchCompleteEvent>().Subscribe(ResearchComplete);
+                        _canResearch = false;
+                    } else {
+                        Debug.Log("Az bekle mk");
+                    }
+                });
+
+            /*int lastStatIndex = 0;
             for (int i = 0; i < _statValuesPanel.transform.childCount; i++) {
 
                 StatType p_type = StatType.Attack;
@@ -43,7 +63,6 @@ namespace Game.Views {
                     }
                 }
 
-                // BUG :: There's a bug here ! Somewehere. When any kind of research finishes, every other on going research finishes in logic, but still shown as Activity.
                 _statValuesPanel.transform.GetChild(i).Find("Increment").GetComponent<Button>().onClick.AddListener(
                     () => {
                         if (_canResearch) {
@@ -60,7 +79,7 @@ namespace Game.Views {
                     });
 
                 lastStatIndex++;
-            }
+            }*/
         }
 
         private void ResearchComplete(ResearchCompleteEvent p_ResearchCompleteEvent) {
@@ -69,7 +88,8 @@ namespace Game.Views {
 
             _canResearch = true;
 
-            _company.Tech.Weapons[(int)p_ResearchCompleteEvent.ResearchActivity.Research.Weapon.Type].AddStat(p_ResearchCompleteEvent.ResearchActivity.Research.StatType, 1);
+            _company.Tech.Weapons[(int) p_ResearchCompleteEvent.ResearchActivity.Research.Weapon.Type] =
+                p_ResearchCompleteEvent.ResearchActivity.Research.Weapon.Copy();
 
             _subscription.Dispose();
 
