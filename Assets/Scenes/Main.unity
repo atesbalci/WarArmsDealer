@@ -2491,7 +2491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6544118, g: 0.6544118, b: 0.6544118, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2881,7 +2881,7 @@ RectTransform:
   m_Children:
   - {fileID: 1068175546}
   m_Father: {fileID: 1639772065}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -2901,8 +2901,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActivitiesParent: {fileID: 551017092}
   ActivityViewPrefab: {fileID: 1068175547}
-  ResearchSprite: {fileID: 0}
-  DesignSprite: {fileID: 0}
+  ResearchSprite: {fileID: 21300000, guid: a8b9b064e9e1ced4c9c25874fc0726db, type: 3}
+  DesignSprite: {fileID: 21300000, guid: b435bac07f1399e4a8e0c7009933d28d, type: 3}
 --- !u!114 &551017094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5836,7 +5836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.647}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.309}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -6386,9 +6386,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 60b9287cc433b564fb8fc80de9cda669, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -7536,7 +7536,7 @@ RectTransform:
   - {fileID: 1213738733}
   - {fileID: 1043543350}
   m_Father: {fileID: 1639772065}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -10018,8 +10018,8 @@ RectTransform:
   - {fileID: 395633157}
   - {fileID: 518487158}
   - {fileID: 89906977}
-  - {fileID: 551017092}
   - {fileID: 1320830369}
+  - {fileID: 551017092}
   m_Father: {fileID: 807876775}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

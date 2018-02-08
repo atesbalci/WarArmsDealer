@@ -32,12 +32,13 @@ namespace Game.Views
                 var dact = add.Value as DesignActivity;
                 if (ract != null)
                 {
-                    
+                    sprite = ResearchSprite;
                 }
                 else if (dact != null)
                 {
-                    
+                    sprite = DesignSprite;
                 }
+                actView.Logo.sprite = sprite;
             });
             company.Activities.ObserveRemove().Subscribe(rem =>
             {
