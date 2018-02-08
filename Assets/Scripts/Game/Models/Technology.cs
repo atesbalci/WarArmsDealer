@@ -57,13 +57,122 @@ namespace Game.Models
             }
         }
 
-        public string ReturnTechName(ResearchType type, int level)
+        public string ReturnTechName(ResearchType rType, WeaponType wType, int level)
         {
-            return "Ultimate Tech";
+            string name = "";
+            if(rType == ResearchType.Stat)
+            {
+                switch (wType)
+                {
+                    case WeaponType.Infantry:
+
+                        if (level == 4)
+                            name = "Weapon Sights";
+                        if (level == 5)
+                            name = "Multi-purpose Backpacks";
+                        if (level == 6)
+                            name = "Steel Helmets";
+                        if (level == 7)
+                            name = "Rainproof Materials";
+                        if (level == 8)
+                            name = "Adv. Trigger Mechanisms";
+                        if (level == 9)
+                            name = "Rifling";
+                        if (level == 10)
+                            name = "Preloaded Magazines";
+                        if (level == 11)
+                            name = "Machine Guns";
+                        if (level == 12)
+                            name = "Scopes";
+
+                        break;
+                    case WeaponType.Tank:
+                        if (level == 4)
+                            name = "Armored Tractors";
+                        if (level == 5)
+                            name = "Adv. Combustion Engines";
+                        if (level == 6)
+                            name = "Steel Casting";
+                        if (level == 7)
+                            name = "Suspension Tracks";
+                        if (level == 8)
+                            name = "Aluminium-Steel Alloys";
+                        if (level == 9)
+                            name = "Adv. Welding Process";
+                        if (level == 10)
+                            name = "Automatic Reloaders";
+                        if (level == 11)
+                            name = "Superheated Alloys";
+                        if (level == 12)
+                            name = "Replacable Parts";
+                        break;
+                    case WeaponType.Artillery:
+                        if (level == 4)
+                            name = "Artillery Shells";
+                        if (level == 5)
+                            name = "Pre-heated Casts";
+                        if (level == 6)
+                            name = "High-explosive Powder";
+                        if (level == 7)
+                            name = "Diamond Rifling Mechanisms";
+                        if (level == 8)
+                            name = "Longer Barrels";
+                        if (level == 9)
+                            name = "Alloy-cored Shells";
+                        if (level == 10)
+                            name = "Mobile Platforms";
+                        if (level == 11)
+                            name = "Aiming Mechanisms";
+                        if (level == 12)
+                            name = "Industrial Forging";
+                        if (level == 13)
+                            name = "Computational Mechanisms";
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return name;
         }
-        public string ReturnTechDesc(ResearchType type, int level)
+        public string ReturnTechDesc(ResearchType rType, WeaponType wType, int level)
         {
-            return "Ulitmate Desc";
+            string desc = "";
+            if (rType == ResearchType.Stat)
+            {
+                switch (wType)
+                {
+                    case WeaponType.Infantry:
+
+                        if (level == 4)
+                            desc = "Weapon sights improve the accuracy of  a given weapon considerably. Unlocks Light Infantry trait.";
+                        if (level == 5)
+                            desc = "With multi-purpose backpacks, supplying other troops on the battlefield is much easier. Unlocks Survival Kits trait.";
+                        if (level == 6)
+                            desc = "Steel helmets reduce the causalities by protecting infantry from shell explosions and sharapnels";
+                        if (level == 7)
+                            desc = "With rainproof materials it is easier to traverse in harsh conditions, giving infantry a edge. Unlocks Rainproof Gear trait.";
+                        if (level == 8)
+                            desc = "With advanced trigger mechanisms it is possible to fire at a faster rate. Unlocks Semi-automatic Rifles trait.";
+                        if (level == 9)
+                            desc = "Rifling increases the accuracy using rotational inertia. ";
+                        if (level == 10)
+                            desc = "Preloaded magazines makes easier to resupply the troops and increases the fire rate. Unlocks Engineers trait.";
+                        if (level == 11)
+                            desc = "Machine guns dominate the infantry battles with incredible firing rates. Unlocks Full-automatic rifles trait.";
+                        if (level == 12)
+                            desc = "With precisely engineered scopes range of the rifles can be extended beyond the normal sight range";
+
+                        break;
+                    case WeaponType.Tank:
+                        break;
+                    case WeaponType.Artillery:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return desc;
         }
 
         void LoadTraits()
