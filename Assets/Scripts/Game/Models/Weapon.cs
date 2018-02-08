@@ -23,6 +23,7 @@ namespace Game.Models {
         public WeaponType Type;
         public string Name;
         public List<Trait> WeaponTraits;
+        public int KillCount;
 
         public Stat this[StatType type] {
             get { return Stats[(int)type]; }
