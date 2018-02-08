@@ -7665,7 +7665,7 @@ GameObject:
   - component: {fileID: 1392077700}
   - component: {fileID: 1392077699}
   m_Layer: 0
-  m_Name: Quad
+  m_Name: ChalkBoard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7732,13 +7732,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1392077698}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0047, y: 1.4969, z: 4.9678626}
-  m_LocalScale: {x: 2.1455574, y: 1.0128517, z: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -4.64, y: 1.4974, z: 1.37}
+  m_LocalScale: {x: 3.4154801, y: 1.8345555, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &1393042153
 GameObject:
   m_ObjectHideFlags: 0

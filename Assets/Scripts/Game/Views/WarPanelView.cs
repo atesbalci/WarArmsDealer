@@ -24,7 +24,6 @@ public class WarPanelView : ViewBase {
             _nationPanels[i] = transform.GetChild(0).GetChild(0).GetChild(i).gameObject;
         }
 
-        UpdateUi();
     }
 
     public void Tick() {
@@ -58,7 +57,7 @@ public class WarPanelView : ViewBase {
                         .GetComponent<Text>().text = "Traits : " + traitsString;
 
                 // Casulties part
-                _nationPanels[i].transform.Find("NationCasualtyPanel").Find("CasualtyNumbers").GetChild(j).GetComponent<Text>().text = UnityEngine.Random.Range(0, 10000).ToString();
+                _nationPanels[i].transform.Find("NationCasualtyPanel").Find("CasualtyNumbers").GetChild(j).GetComponent<Text>().text = (_nations[i].Casualities * UnityEngine.Random.Range(1, (3 - j + 2) * 2)).ToString();
             }
         }
     }

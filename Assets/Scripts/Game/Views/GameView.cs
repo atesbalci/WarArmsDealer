@@ -83,6 +83,7 @@ namespace Game.Views {
 
             WarViewButton.onClick.AddListener(() => {
                 PanelGroup.HideAll();
+                WarPanelView.UpdateUi();
                 WarPanelView.GetComponent<PanelGroupElement>().Toggle();
                 EventSystem.current.SetSelectedGameObject(null);
             });
