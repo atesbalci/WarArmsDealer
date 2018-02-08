@@ -50,5 +50,10 @@ namespace Game.Models
 
             return Mathf.RoundToInt(Mathf.Pow(2f, duration / 3.0f) * 1f);
         }
+        public float GetCost()
+        {
+            return Weapon[StatType.Attack].Value * 250f;
+        }
     }
+    
 }

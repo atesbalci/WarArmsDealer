@@ -12,7 +12,7 @@ namespace Game.Models
         public Design CompanyDesigns;
         public string Name;
         public FloatReactiveProperty Money;
-
+        public float OldMoney;
 
         public Company(string name = "")
         {
@@ -20,8 +20,10 @@ namespace Game.Models
             Activities = new ReactiveCollection<Activity>();
             DesignedWeapons = new List<Weapon>();
             Tech = new Technology();
-            Money = new FloatReactiveProperty(2000f);
+            OldMoney = 2000f;
+            Money = new FloatReactiveProperty(OldMoney);
             Name = name;
+            
         }
 
 

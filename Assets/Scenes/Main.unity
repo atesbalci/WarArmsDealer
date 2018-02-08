@@ -5118,6 +5118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beb7aa1cee5cd6b4e9baa88aecc131db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TickFrequency: 1
   GameView: {fileID: 1639772068}
 --- !u!1 &1550991893
 GameObject:

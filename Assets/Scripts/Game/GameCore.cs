@@ -10,7 +10,7 @@ namespace Game
 {
     public class GameCore : MonoBehaviour
     {
-        public const float TickFrequency = 1f;
+        public float TickFrequency = 1f;
         public float CombatWidth { get {return Mathf.Log10(_tickCount+10); } }
 
         //Progress -100 means Nation0 lost, Progress 100 means Nation1 lost

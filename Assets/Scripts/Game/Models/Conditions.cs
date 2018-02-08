@@ -8,9 +8,9 @@ namespace Game.Models
     public class Conditions : ModelBase
     {
 
-        public static bool CanResearch(Company company)
+        public static bool CanResearch(Company company, int researchLevel)
         {
-            return company.Activities.Count(x => x is ResearchActivity) < 2;
+            return company.Activities.Count(x => x is ResearchActivity) < 2 && company.Money.Value >= researchLevel * 250;
 
         }
         public static bool CanDesign(Weapon weapon, Company company)

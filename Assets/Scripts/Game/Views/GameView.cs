@@ -4,6 +4,7 @@ using UnityEngine;
 using UniRx;
 using UnityEngine.EventSystems;
 using Utils.ViewHelpers;
+using System.Collections;
 
 namespace Game.Views {
     public class GameView : ViewBase {
@@ -32,6 +33,11 @@ namespace Game.Views {
 
         [Header("PanelGroup")]
         public PanelGroup PanelGroup;
+
+        private bool _redIsNewer;
+        private int _greenAnim, _redAnim;
+        private float _difference = 0f;
+        private string _oldTimeText;
 
         public void Bind(Nation p_Nation0, Nation p_Nation1, Company p_Company) {
             _nation0 = p_Nation0;
@@ -79,11 +85,72 @@ namespace Game.Views {
             WarStateLeftImage.fillAmount = leftOrientedWinPercent;
             WarStateRightImage.fillAmount = 1 - leftOrientedWinPercent;
         }
-        public void UpdateCompanyState(int tickCount)
+        IEnumerator MoneyColor(bool isRed)
         {
+            yield return new WaitForSeconds(2f);
+            if(isRed)
+            {
+                _redAnim--;
+            }
+            else
+            {
+                _greenAnim--;
+            }
+            UpdateCompanyState();
+        }
+
+        public void UpdateCompanyState(int tickCount=-1)
+        {
+            
+            string moneyText = "";
+            string timeText = tickCount >= 0 ? CalculateTime(tickCount) : _oldTimeText;
+            
+            if(_company.OldMoney == _company.Money.Value && (_redAnim == 0 && _greenAnim == 0))
+            {
+                moneyText = "\nMoney: " + _company.Money;
+            }
+            if(_company.OldMoney > _company.Money.Value)
+            {
+                _difference = (_company.Money.Value - _company.OldMoney);
+                StartCoroutine(MoneyColor(true));
+                _redAnim++;
+                Debug.Log("Entered this");
+                _redIsNewer = true;
+            }
+            if (_company.OldMoney < _company.Money.Value)
+            {
+                _difference = (_company.Money.Value - _company.OldMoney);
+                StartCoroutine(MoneyColor(false));
+                _greenAnim++;
+                _redIsNewer = false;
+            }
+
+
+            if (_redAnim > 0 && _redIsNewer && _difference != 0)
+            {
+                moneyText = "\nMoney: " + _company.Money + " (<color=red>" + _difference + "</color>)";
+            }
+            if(_greenAnim > 0 && !_redIsNewer && _difference != 0)
+            {
+                moneyText = "\nMoney: " + _company.Money + " (<color=green>+" + _difference + "</color>)";
+            }
             CompanyInfoText.text = "Company Name: " + _company.Name +
-                "\nMoney: " + _company.Money +
-                "\nTime: " + tickCount;
+                moneyText +
+                "\n" + timeText;
+            _oldTimeText = timeText;
+            _company.OldMoney = _company.Money.Value;
+            
+        }
+
+        string CalculateTime(int tickCount)
+        {
+            string result = "";
+            int w = tickCount % 4 + 1;
+
+            int m = (tickCount / 4) % 12 + 1;
+            int y = (tickCount / (4 * 12)) + 1;
+            result = "Y" + y + " M" + m + " W" + w;
+            return result;
         }
     }
 }

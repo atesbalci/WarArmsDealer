@@ -57,6 +57,15 @@ namespace Game.Models
             }
         }
 
+        public string ReturnTechName(ResearchType type, int level)
+        {
+            return "Ultimate Tech";
+        }
+        public string ReturnTechDesc(ResearchType type, int level)
+        {
+            return "Ulitmate Desc";
+        }
+
         void LoadTraits()
         {
            

@@ -14,13 +14,15 @@ namespace Game.Views {
         private ResearchActivity _researchActivity;
         private IDisposable _subscription;
 
-        private GameObject _researchLevel, _researchText, _researchText2;
+        private GameObject _researchLevel, _researchText, _researchCostText,_researchName, _researchText2;
 
         private ResearchType _researchType;
 
         public void Bind(Company p_Company, WeaponType p_WeaponType, ResearchType p_ResearchType) {
             _researchLevel = transform.Find("ResearchLevel").gameObject;
             _researchText = transform.Find("ResearchText").GetChild(0).gameObject;
+            _researchCostText = transform.Find("ResearchText").GetChild(1).gameObject;
+            _researchName = transform.Find("ResearchName").GetChild(0).gameObject;
             _researchText2 = transform.Find("ResearchText2").GetChild(0).gameObject;
 
             _company = p_Company;
@@ -41,6 +43,7 @@ namespace Game.Views {
                                     tempWeapon.AddStat(t.Type, 1);
                                 }
                             }
+                            _company.Money.Value -= (new Research(tempWeapon)).GetCost();
 
                             _researchActivity = new ResearchActivity(new Research(tempWeapon));
                             _company.AddResearch(_researchActivity);
@@ -63,6 +66,7 @@ namespace Game.Views {
                                 }
                             }
 
+                            _company.Money.Value -= (new Research(tempWeapon)).GetCost();
                             _researchActivity = new ResearchActivity(new Research(tempWeapon, _researchType));
                             _company.AddResearch(_researchActivity);
                             _subscription = MessageManager.Receive<ResearchCompleteEvent>().Subscribe(ResearchComplete);
@@ -120,6 +124,8 @@ namespace Game.Views {
             else {
                 _company.Tech.Weapons[(int)p_ResearchCompleteEvent.ResearchActivity.Research.Weapon.Type] =
                     p_ResearchCompleteEvent.ResearchActivity.Research.Weapon.Copy();
+                _company.Tech.UnlockTrait(_weaponType, p_ResearchCompleteEvent.ResearchActivity.Research.Weapon.Stats[0].Value);
+
             }
 
             _canResearch = true;
@@ -131,13 +137,20 @@ namespace Game.Views {
 
         private void RefreshUi() {
 
+            if (Conditions.CanResearch(_company, _company.Tech.Weapons[(int)_weaponType].Stats[0].Value))
+                GetComponent<Button>().interactable = true;
+            else
+                GetComponent<Button>().interactable = false;
+            Research tempResearch = new Research(_company.Tech.Weapons[(int)_weaponType].Copy());
+
             if (_researchType == ResearchType.Stat) {
                 //transform.Find("WeaponName").GetComponent<Text>().text = Enum.GetName(typeof(WeaponType), _company.Tech.Weapons[(int)_weaponType].Type);
 
                 _researchLevel.GetComponent<Text>().text = _company.Tech.Weapons[(int)_weaponType].Stats[0].Value.ToString();
-                _researchText.GetComponent<Text>().text = Enum.GetName(typeof(WeaponType), _weaponType);
-                _researchText2.GetComponent<Text>().text = "This research is so good.";
-                _company.Tech.UnlockTrait(_weaponType, _company.Tech.Weapons[(int)_weaponType].Stats[0].Value);
+                _researchText.GetComponent<Text>().text = Enum.GetName(typeof(WeaponType), _weaponType); 
+                _researchCostText.GetComponent<Text>().text = "Cost: " + tempResearch.GetCost();
+                _researchName.GetComponent<Text>().text = _company.Tech.ReturnTechName(_researchType, _company.Tech.Weapons[(int)_weaponType].Stats[0].Value + 1);
+                _researchText2.GetComponent<Text>().text = _company.Tech.ReturnTechDesc(_researchType, _company.Tech.Weapons[(int)_weaponType].Stats[0].Value + 1);
                 // Set Stat texts of UI
                 /*int lastStatIndex = 0;
                 for (int i = 0; i < 3; i++) {
