@@ -186,7 +186,8 @@ namespace Game.Views {
                 _researchLevel.GetComponent<Text>().text = _researchType == ResearchType.Design ? _company.Tech.DesignLevel.ToString() : _company.Tech.TechLevel.ToString();
                 _researchText.GetComponent<Text>().text = Enum.GetName(typeof(ResearchType), _researchType);
                 _researchCostText.GetComponent<Text>().text = "Cost: " + (_researchType == ResearchType.Design ? _company.Tech.DesignLevel * 250f : _company.Tech.TechLevel * 250f);
-                _researchText2.GetComponent<Text>().text = "This research is so good.";
+                _researchName.GetComponent<Text>().text = _company.Tech.ReturnTechName(_researchType, WeaponType.Infantry, _company.Tech.TechLevel);
+                _researchText2.GetComponent<Text>().text = _company.Tech.ReturnTechDesc(_researchType, WeaponType.Infantry, _company.Tech.TechLevel);
 
             }
         }
