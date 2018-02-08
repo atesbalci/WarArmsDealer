@@ -47,13 +47,13 @@ namespace Game.Views
         private void Refresh()
         {
             var progress = 1f - (float)Activity.RemainingDuration / Activity.TotalDuration;
-            Progress.fillAmount = progress;
+            Progress.fillAmount = Mathf.MoveTowards(Progress.fillAmount, progress, Time.deltaTime * 0.5f);
         }
 
         public void Kill()
         {
             Refresh();
-            var col = Mathf.Approximately(Progress.fillAmount, 1f) ? Color.green : new Color(1f, 0.5f, 0f);
+            var col = Activity.RemainingDuration == 0 ? Color.green : new Color(1f, 0.5f, 0f);
             col.a = Progress.color.a;
             Progress.color = col;
 
@@ -67,6 +67,7 @@ namespace Game.Views
                 clear.a = 0f;
                 sequence.Join(graphic.DOColor(clear, 1f));
             }
+            sequence.onComplete = () => Destroy(gameObject);
         }
     }
 }
