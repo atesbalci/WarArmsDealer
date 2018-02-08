@@ -37,18 +37,19 @@ namespace Game.Views {
                     () => {
                         if (_canResearch) {
                             Weapon tempWeapon = _company.Tech.Weapons[(int)_weaponType].Copy();
-
+                            _company.Money.Value -= (new Research(tempWeapon)).GetCost();
                             foreach (Stat t in tempWeapon.Stats) {
                                 if (t.Value != 0) {
                                     tempWeapon.AddStat(t.Type, 1);
                                 }
                             }
-                            _company.Money.Value -= (new Research(tempWeapon)).GetCost();
+                           
 
                             _researchActivity = new ResearchActivity(new Research(tempWeapon));
                             _company.AddResearch(_researchActivity);
                             _subscription = MessageManager.Receive<ResearchCompleteEvent>().Subscribe(ResearchComplete);
                             _canResearch = false;
+                            RefreshUi();
                         }
                     });
             }
@@ -71,6 +72,7 @@ namespace Game.Views {
                             _company.AddResearch(_researchActivity);
                             _subscription = MessageManager.Receive<ResearchCompleteEvent>().Subscribe(ResearchComplete);
                             _canResearch = false;
+
                         }
                     });
             }
@@ -136,11 +138,12 @@ namespace Game.Views {
         }
 
         private void RefreshUi() {
-
+            /*
             if (Conditions.CanResearch(_company, _company.Tech.Weapons[(int)_weaponType].Stats[0].Value))
                 GetComponent<Button>().interactable = true;
             else
                 GetComponent<Button>().interactable = false;
+            */
             Research tempResearch = new Research(_company.Tech.Weapons[(int)_weaponType].Copy());
 
             if (_researchType == ResearchType.Stat) {
@@ -149,8 +152,8 @@ namespace Game.Views {
                 _researchLevel.GetComponent<Text>().text = _company.Tech.Weapons[(int)_weaponType].Stats[0].Value.ToString();
                 _researchText.GetComponent<Text>().text = Enum.GetName(typeof(WeaponType), _weaponType); 
                 _researchCostText.GetComponent<Text>().text = "Cost: " + tempResearch.GetCost();
-                _researchName.GetComponent<Text>().text = _company.Tech.ReturnTechName(_researchType, _company.Tech.Weapons[(int)_weaponType].Stats[0].Value + 1);
-                _researchText2.GetComponent<Text>().text = _company.Tech.ReturnTechDesc(_researchType, _company.Tech.Weapons[(int)_weaponType].Stats[0].Value + 1);
+                _researchName.GetComponent<Text>().text = _company.Tech.ReturnTechName(_researchType,_weaponType, _company.Tech.Weapons[(int)_weaponType].Stats[0].Value + 1);
+                _researchText2.GetComponent<Text>().text = _company.Tech.ReturnTechDesc(_researchType, _weaponType, _company.Tech.Weapons[(int)_weaponType].Stats[0].Value + 1);
                 // Set Stat texts of UI
                 /*int lastStatIndex = 0;
                 for (int i = 0; i < 3; i++) {
@@ -169,6 +172,7 @@ namespace Game.Views {
 
                 _researchLevel.GetComponent<Text>().text = _researchType == ResearchType.Design ? _company.Tech.DesignLevel.ToString() : _company.Tech.TechLevel.ToString();
                 _researchText.GetComponent<Text>().text = Enum.GetName(typeof(ResearchType), _researchType);
+                _researchCostText.GetComponent<Text>().text = "Cost: " + (_researchType == ResearchType.Design ? _company.Tech.DesignLevel * 250f : _company.Tech.TechLevel * 250f);
                 _researchText2.GetComponent<Text>().text = "This research is so good.";
 
             }

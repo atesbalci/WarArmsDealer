@@ -52,7 +52,7 @@ namespace Game.Models
         }
         public float GetCost()
         {
-            return Weapon[StatType.Attack].Value * 250f;
+            return (Weapon[StatType.Attack].Value + 1) * 250f;
         }
     }
     
