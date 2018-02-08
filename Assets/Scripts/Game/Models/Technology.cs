@@ -110,9 +110,9 @@ namespace Game.Models
                         if (level == 4)
                             name = "Artillery Shells";
                         if (level == 5)
-                            name = "Pre-heated Casts";
+                            name = "Pre-heated Ammunition";
                         if (level == 6)
-                            name = "High-explosive Powder";
+                            name = "High-explosive Chemicals";
                         if (level == 7)
                             name = "Diamond Rifling Mechanisms";
                         if (level == 8)
@@ -126,11 +126,20 @@ namespace Game.Models
                         if (level == 12)
                             name = "Industrial Forging";
                         if (level == 13)
-                            name = "Computational Mechanisms";
+                            name = "Ballistic Computation";
                         break;
                     default:
                         break;
                 }
+            }
+            else if (rType == ResearchType.Design)
+            {
+
+                name = "Design Techniques";
+            }
+            else if (rType == ResearchType.Tech)
+            {
+                name = "Computation Tools";
             }
 
             return name;
@@ -142,8 +151,30 @@ namespace Game.Models
             {
                 switch (wType)
                 {
-                    case WeaponType.Infantry:
+                    case WeaponType.Tank:
 
+                        if (level == 4)
+                            desc = "With armored tractors infantry is better protected against fire.";
+                        
+                        if (level == 5)
+                            desc = "These newer combustuion engines can support the heavier loads brought by tanks. Unlocks Cast Engine trait.";
+                        if (level == 6)
+                            desc = "Steel can be cast in large sheets making a durable armor. Unlocks Steel Plating trait.";
+                        if (level == 7)
+                            desc = "Suspension tracks makes it possible to traverse through harsh terrain conditions.";
+                        if (level == 8)
+                            desc = "Inclusion of aluminum in alloys creates light and durable materials. Unlocks Light Chassis trait.";
+                        if (level == 9)
+                            desc = "Larger parts can be combined to form a single structure with welding. Unlocks Armor Skirts trait.";
+                        if (level == 10)
+                            desc = "Automatic reloaders increase the rate of fire significantly and more relaible than manual loading.";
+                        if (level == 11)
+                            desc = "Superheated alloys can bent at will to create more efficient shapes. Unlocks Rounded Armor trait";
+                        if (level == 12)
+                            desc = "Replaceable parts makes the on-field repairs possible. Unlocks the Repair Corps trait.";
+
+                        break;
+                    case WeaponType.Infantry:
                         if (level == 4)
                             desc = "Weapon sights improve the accuracy of  a given weapon considerably. Unlocks Light Infantry trait.";
                         if (level == 5)
@@ -155,22 +186,49 @@ namespace Game.Models
                         if (level == 8)
                             desc = "With advanced trigger mechanisms it is possible to fire at a faster rate. Unlocks Semi-automatic Rifles trait.";
                         if (level == 9)
-                            desc = "Rifling increases the accuracy using rotational inertia. ";
+                            desc = "Rifling increases the accuracy using rotational inertia.";
                         if (level == 10)
                             desc = "Preloaded magazines makes easier to resupply the troops and increases the fire rate. Unlocks Engineers trait.";
                         if (level == 11)
                             desc = "Machine guns dominate the infantry battles with incredible firing rates. Unlocks Full-automatic rifles trait.";
                         if (level == 12)
                             desc = "With precisely engineered scopes range of the rifles can be extended beyond the normal sight range";
-
-                        break;
-                    case WeaponType.Tank:
                         break;
                     case WeaponType.Artillery:
+                        if (level == 4)
+                            desc = "Switching from cannonbals to shells increase the range and accuracy dramatically.";
+                        if (level == 5)
+                            desc = "Preheated ammunition is more reliable in terms of impact response and more effective against soft targets";
+                        if (level == 6)
+                            desc = "Highly explosive chemicals enables sharapnel storms across the battlefield. Unlocks Canister Shot trait.";
+                        if (level == 7)
+                            desc = "Diamond tipped drills can create large rifled barrels. Unlocks Rifled Cannons trait.";
+                        if (level == 8)
+                            desc = "Longer barrels increases penetration power and range significantly";
+                        if (level == 9)
+                            desc = "Replacing shell cores with advanced alloys increases pierce capability. Unlocks Tungsten Rounds trait.";
+                        if (level == 10)
+                            desc = "Self-propelled artillery platforms provide much needed manuverability. Unlocks Self-Propelled trait.";
+                        if (level == 11)
+                            desc = "Dynamic aiming mechanisms increase accuracy and aiming time.";
+                        if (level == 12)
+                            desc = "Huge forges can create smoothbored large barrels which are powerful. Unlocks Smoothbore trait.";
+                        if (level == 13)
+                            desc = "Mechanisms for simple calculations are actually very complex. Unlocks Ballistic Calculator trait.";
                         break;
+                        
                     default:
                         break;
                 }
+            }
+            else if(rType == ResearchType.Design)
+            {
+
+                desc = "Increased efficiency in designing and prototyping";
+            }
+            else if(rType == ResearchType.Tech)
+            {
+                desc = "Creating tools for more efficient research.";
             }
             return desc;
         }

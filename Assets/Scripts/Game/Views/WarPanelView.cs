@@ -35,6 +35,7 @@ public class WarPanelView : ViewBase {
             _nationPanels[i].transform.Find("NationName").GetComponent<Text>().text = _nations[i].Name;
 
             // Weapon stats and traits part.
+            float[] multipliers = { 15.853f, 0.25f, 0.15f };
             for (int j = 0; j < 3; j++) {
                 string statsString = "";
                 string traitsString = "-";
@@ -57,7 +58,7 @@ public class WarPanelView : ViewBase {
                         .GetComponent<Text>().text = "Traits : " + traitsString;
 
                 // Casulties part
-                _nationPanels[i].transform.Find("NationCasualtyPanel").Find("CasualtyNumbers").GetChild(j).GetComponent<Text>().text = Mathf.RoundToInt((_nations[i].Casualities * (3 - j + 2) * 2 * UnityEngine.Random.Range(1f, 1.4f))).ToString();
+                _nationPanels[i].transform.Find("NationCasualtyPanel").Find("CasualtyNumbers").GetChild(j).GetComponent<Text>().text = Mathf.RoundToInt((_nations[i].Casualities * multipliers[j] * 2)).ToString();
             }
         }
     }
