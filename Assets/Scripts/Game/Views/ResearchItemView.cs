@@ -35,17 +35,19 @@ namespace Game.Views {
             if (_researchType == ResearchType.Stat) {
                 GetComponent<Button>().onClick.AddListener(
                     () => {
-                        if (_canResearch) {
-                            Weapon tempWeapon = _company.Tech.Weapons[(int)_weaponType].Copy();
-                            _company.Money.Value -= (new Research(tempWeapon)).GetCost();
+                        Weapon tempWeapon = _company.Tech.Weapons[(int)_weaponType].Copy();
+                        Research tempResearch = new Research(tempWeapon);
+
+                        if (_canResearch && _company.Money.Value >= tempResearch.GetCost()){
+                            _company.Money.Value -= tempResearch.GetCost();
+
                             foreach (Stat t in tempWeapon.Stats) {
                                 if (t.Value != 0) {
                                     tempWeapon.AddStat(t.Type, 1);
                                 }
                             }
-                           
 
-                            _researchActivity = new ResearchActivity(new Research(tempWeapon));
+                            _researchActivity = new ResearchActivity(tempResearch);
                             _company.AddResearch(_researchActivity);
                             _subscription = MessageManager.Receive<ResearchCompleteEvent>().Subscribe(ResearchComplete);
                             _canResearch = false;
@@ -56,18 +58,29 @@ namespace Game.Views {
             else {
                 GetComponent<Button>().onClick.AddListener(
                     () => {
-                        if (_canResearch) {
-                            Weapon tempWeapon = _company.Tech.Weapons[(int) _weaponType].Copy();
+                        Weapon tempWeapon = _company.Tech.Weapons[(int)_weaponType].Copy();
+
+                        foreach (Stat t in tempWeapon.Stats) {
+                            if (t.Value != 0) {
+                                tempWeapon.Stats[(int)t.Type].Value = _researchType == ResearchType.Design
+                                    ? _company.Tech.DesignLevel - 1
+                                    : _company.Tech.TechLevel - 1;
+                            }
+                        }
+
+                        Research tempResearch = new Research(tempWeapon);
+
+                        if (_canResearch && _company.Money.Value >= tempResearch.GetCost()) {
+                            _company.Money.Value -= tempResearch.GetCost();
 
                             foreach (Stat t in tempWeapon.Stats) {
                                 if (t.Value != 0) {
-                                    tempWeapon.Stats[(int) t.Type].Value = _researchType == ResearchType.Design
+                                    tempWeapon.Stats[(int)t.Type].Value = _researchType == ResearchType.Design
                                         ? _company.Tech.DesignLevel
                                         : _company.Tech.TechLevel;
                                 }
                             }
 
-                            _company.Money.Value -= (new Research(tempWeapon)).GetCost();
                             _researchActivity = new ResearchActivity(new Research(tempWeapon, _researchType));
                             _company.AddResearch(_researchActivity);
                             _subscription = MessageManager.Receive<ResearchCompleteEvent>().Subscribe(ResearchComplete);
