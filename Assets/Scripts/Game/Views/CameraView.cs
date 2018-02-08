@@ -7,7 +7,7 @@ namespace Game.Views
 {
     public enum CameraSpotType
     {
-        Initial, Design, Research, Sale
+        Initial, Design, Research, Sale, War
     }
 
     public class CameraView : ViewBase
