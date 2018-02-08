@@ -19,6 +19,7 @@ namespace Game.Views {
         public Button WeaponDesignButton;
         public Button ReseachViewButton;
         public Button SalesViewButton;
+        public Button WarViewButton;
 
         [Header("Texts")]
         public Text CompanyInfoText;
@@ -30,6 +31,7 @@ namespace Game.Views {
         public ActivitiesView ActivitiesView;
         public SalesView SalesView;
         public CameraView CameraView;
+        public WarPanelView WarPanelView;
 
         [Header("PanelGroup")]
         public PanelGroup PanelGroup;
@@ -49,6 +51,7 @@ namespace Game.Views {
             ResearchView.Bind(_company);
             ActivitiesView.Bind(_company);
             SalesView.Bind(_company, _nation0, _nation1);
+            WarPanelView.Bind(_company, _nation0, _nation1);
 
             WeaponDesignButton.onClick.AddListener(() => {
                 PanelGroup.HideAll();
@@ -77,6 +80,13 @@ namespace Game.Views {
                 });
                 EventSystem.current.SetSelectedGameObject(null);
             });
+
+            WarViewButton.onClick.AddListener(() => {
+                PanelGroup.HideAll();
+                WarPanelView.GetComponent<PanelGroupElement>().Toggle();
+                EventSystem.current.SetSelectedGameObject(null);
+            });
+
             CameraView.Init();
         }
 

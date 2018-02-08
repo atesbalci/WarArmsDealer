@@ -57,6 +57,7 @@ namespace Game
             WarProgress = _sim.SimulateBattle(CombatWidth, WarProgress);
             GameView.UpdateWarState(WarProgress);
             GameView.UpdateCompanyState(_tickCount);
+            GameView.WarPanelView.Tick();
             _playerCompany.Tick();
             Debug.Log(WarProgress);
         }
