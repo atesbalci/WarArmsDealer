@@ -11,6 +11,8 @@ namespace Game.Views
 
         [Space(10)]
         public ActivityView ActivityViewPrefab;
+        public Sprite ResearchSprite;
+        public Sprite DesignSprite;
 
         private List<ActivityView> _activityViews;
 
@@ -23,6 +25,19 @@ namespace Game.Views
                 actView.Bind(add.Value);
                 _activityViews.Add(actView);
                 actView.gameObject.SetActive(true);
+
+                Weapon weapon = null;
+                Sprite sprite = null;
+                var ract = add.Value as ResearchActivity;
+                var dact = add.Value as DesignActivity;
+                if (ract != null)
+                {
+                    
+                }
+                else if (dact != null)
+                {
+                    
+                }
             });
             company.Activities.ObserveRemove().Subscribe(rem =>
             {
