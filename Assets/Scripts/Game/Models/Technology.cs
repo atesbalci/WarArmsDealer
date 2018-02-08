@@ -77,7 +77,7 @@ namespace Game.Models
             {
                 case WeaponType.Infantry:
 
-                    if(level==levelOffset+levelOffset+2)
+                    if(level==levelOffset+2)
                         InfantryTraits.Add(new LightInfantry());
                     if(level==levelOffset+3)
                         InfantryTraits.Add(new SurvivalKits());
@@ -105,6 +105,19 @@ namespace Game.Models
                         TankTraits.Add(new RepairCorps());
                     break;
                 case WeaponType.Artillery:
+
+                    if (level == levelOffset + 4)
+                        ArtilleryTraits.Add(new CanisterShot());
+                    if (level == levelOffset + 5)
+                        ArtilleryTraits.Add(new RifledCannons());
+                    if (level == levelOffset + 7)
+                        ArtilleryTraits.Add(new TungstenRounds());
+                    if (level == levelOffset + 8)
+                        ArtilleryTraits.Add(new SelfPropelled());
+                    if (level == levelOffset + 10)
+                        ArtilleryTraits.Add(new Smoothbore());
+                    if (level == levelOffset + 11)
+                        ArtilleryTraits.Add(new BalisticCalculator());
                     break;
                 default:
                     break;

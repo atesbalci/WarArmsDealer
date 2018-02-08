@@ -75,6 +75,7 @@ namespace Game.Views
                     {
                         var d = Instantiate(DesignViewTemplate, DesignList.transform.Find("GridWithOurElements"));
                         d.GetComponentInChildren<Text>().text = _company.Tech.TankTraits[i].Name;
+                        d.transform.GetChild(1).GetComponent<Text>().text = _company.Tech.TankTraits[i].Description;
                         if (CurrentDesignTraits.AsSafeEnumerable().ToList().Exists(x => _company.Tech.TankTraits[i] == x))
                             d.GetComponent<Image>().color = Color.blue;
                         else
@@ -104,6 +105,7 @@ namespace Game.Views
                     {
                         var d = Instantiate(DesignViewTemplate, DesignList.transform.Find("GridWithOurElements"));
                         d.GetComponentInChildren<Text>().text = _company.Tech.ArtilleryTraits[i].Name;
+                        d.transform.GetChild(1).GetComponent<Text>().text = _company.Tech.ArtilleryTraits[i].Description;
                         if (CurrentDesignTraits.AsSafeEnumerable().ToList().Exists(x => _company.Tech.ArtilleryTraits[i] == x))
                             d.GetComponent<Image>().color = Color.blue;
                         else

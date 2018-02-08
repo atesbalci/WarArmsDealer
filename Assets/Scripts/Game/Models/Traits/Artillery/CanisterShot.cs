@@ -4,19 +4,20 @@ using UnityEngine;
 
 namespace Game.Models
 {
-    public class TungstenRounds : Trait
+    public class CanisterShot : Trait
     {
-        public TungstenRounds()
+
+        public CanisterShot()
         {
-            Name = "Tungsten Rounds:";
-            Description = "Tungsten rounds are better for piercing armor. Increases piercing by 10%";
-            Complexity = 2;
+            Name = "Canister Shot:";
+            Description = "Increases the attack by 50% but decreases the piercing by 50%";
+            Complexity = 1;
         }
 
         public override float[] ApplyTrait(Weapon weapon, Nation weaponNation, Nation oppositeNation)
         {
-            
-            Debug.Assert(weapon.Type == WeaponType.Tank);
+
+            Debug.Assert(weapon.Type == WeaponType.Artillery);
             float[] traitModifiers = new float[3];
             int count = 0;
             foreach (var val in weapon[weapon.GetStatTypes()])
@@ -24,10 +25,8 @@ namespace Game.Models
                 traitModifiers[count] = val.Value;
                 count++;
             }
-            traitModifiers[0] *= 1.1f; //10% increase
-
-
-
+            traitModifiers[0] *= 1.5f;
+            traitModifiers[2] *= 0.5f; //25% increase
             return traitModifiers;
         }
 

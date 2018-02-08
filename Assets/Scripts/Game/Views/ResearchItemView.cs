@@ -137,7 +137,7 @@ namespace Game.Views {
                 _researchLevel.GetComponent<Text>().text = _company.Tech.Weapons[(int)_weaponType].Stats[0].Value.ToString();
                 _researchText.GetComponent<Text>().text = Enum.GetName(typeof(WeaponType), _weaponType);
                 _researchText2.GetComponent<Text>().text = "This research is so good.";
-
+                _company.Tech.UnlockTrait(_weaponType, _company.Tech.Weapons[(int)_weaponType].Stats[0].Value);
                 // Set Stat texts of UI
                 /*int lastStatIndex = 0;
                 for (int i = 0; i < 3; i++) {
