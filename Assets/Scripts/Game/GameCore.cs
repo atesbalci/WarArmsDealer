@@ -11,7 +11,7 @@ namespace Game
     public class GameCore : MonoBehaviour
     {
         public float TickFrequency = 1f;
-        public float CombatWidth { get {return Mathf.Log10(_tickCount+10); } }
+        public float CombatWidth { get {return Mathf.Log10(_tickCount+10)*10f; } }
 
         //Progress -100 means Nation0 lost, Progress 100 means Nation1 lost
         float WarProgress = 0f;
@@ -59,7 +59,7 @@ namespace Game
             GameView.UpdateCompanyState(_tickCount);
             GameView.WarPanelView.Tick();
             _playerCompany.Tick();
-            Debug.Log(WarProgress);
+            //Debug.Log(WarProgress);
         }
     }
 }

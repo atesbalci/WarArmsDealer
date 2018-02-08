@@ -17,6 +17,7 @@ namespace Game.Models
         public ArtilleryWeapon CurrentArtillery;
 
         public Weapon[] Weapons;
+        public int Casualities;
 
         public Nation() {
             CurrentInfantry = new InfantryWeapon();
