@@ -247,6 +247,7 @@ namespace Game.Models
             healthEast = Mathf.Max(0f, healthEast);
             healthWest = Mathf.Max(0f, healthWest);
 
+
             if(healthEast > healthWest)
             {
                 progress = progress - 1;
