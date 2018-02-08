@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UniRx;
-using UnityEditor;
 
 namespace Game.Models
 {
