@@ -12,11 +12,14 @@ namespace Game.Views
 
     public class CameraView : ViewBase
     {
+        //Warning disabled since Unity editor sets these variables
         [Serializable]
         private class CameraSpot
         {
+#pragma warning disable 649
             public CameraSpotType SpotType;
             public Transform Transform;
+#pragma warning restore 649
         }
         [SerializeField]
         private CameraSpot[] _spotValues;

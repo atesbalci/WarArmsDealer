@@ -1,6 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
 using Game.Models;
-using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +13,7 @@ namespace Game.Views
 
         public Activity Activity { get; set; }
 
-        private IDisposable _death;
+        private Graphic[] _graphics;
 
         public void Bind(Activity activity)
         {
@@ -24,7 +23,20 @@ namespace Game.Views
             var col = Color.yellow;
             col.a = Progress.color.a;
             Progress.color = col;
-            _death = null;
+            _graphics = GetComponentsInChildren<Graphic>(true);
+
+            //Animation
+            transform.localScale = Vector3.one * 2f;
+            transform.DOScale(Vector3.one, 0.5f);
+            foreach (var graphic in _graphics)
+            {
+                var color = graphic.color;
+                var alpha = color.a;
+                color.a = 0f;
+                graphic.color = color;
+                color.a = alpha;
+                graphic.DOColor(color, 0.5f);
+            }
         }
 
         private void Update()
@@ -41,10 +53,20 @@ namespace Game.Views
         public void Kill()
         {
             Refresh();
-            _death = Observable.Timer(TimeSpan.FromSeconds(2f)).Subscribe(l => Destroy(gameObject));
             var col = Mathf.Approximately(Progress.fillAmount, 1f) ? Color.green : new Color(1f, 0.5f, 0f);
             col.a = Progress.color.a;
             Progress.color = col;
+
+            //Animation
+            var sequence = DOTween.Sequence();
+            sequence.Append(transform.DOScale(Vector3.one * 1.5f, 0.5f));
+            sequence.Append(transform.DOScale(Vector3.one, 1f));
+            foreach (var graphic in _graphics)
+            {
+                var clear = graphic.color;
+                clear.a = 0f;
+                sequence.Join(graphic.DOColor(clear, 1f));
+            }
         }
     }
 }
