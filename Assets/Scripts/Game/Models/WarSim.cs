@@ -238,12 +238,12 @@ namespace Game.Models
             while (healthEast > 0f && healthWest > 0f) {
                 var damageWest = Mathf.Max((attackWest - Random.Range(0f, supportRandEast * 2f)) * 0.1f / _nations[0].Weapons[(int)WeaponType.Tank].Stats[(int)StatType.Armor].Value, Random.Range(0f, supportRandEast * 0.1f));
                 healthEast -= damageWest;
-                _nations[0].Casualities += Mathf.FloorToInt(damageWest * combatWidt);
+                _nations[0].Casualities += Mathf.FloorToInt(damageWest * combatWidt * Random.Range(1f, 1.4f));
                 var damageEast = Mathf.Max((attackEast - Random.Range(0f, supportRandWest * 2f)) * 0.1f / _nations[1].Weapons[(int)WeaponType.Tank].Stats[(int)StatType.Armor].Value, Random.Range(0f, supportRandWest * 0.1f));
-                _nations[1].Casualities += Mathf.FloorToInt(damageEast * combatWidt);
+                _nations[1].Casualities += Mathf.FloorToInt(damageEast * combatWidt * Random.Range(1f, 1.4f)) ;
                 healthWest -= damageEast;
             }
-            Debug.Log("Casualities: " + _nations[0].Casualities + " | " + _nations[1].Casualities);
+            //Debug.Log("Casualities: " + _nations[0].Casualities + " | " + _nations[1].Casualities);
             healthEast = Mathf.Max(0f, healthEast);
             healthWest = Mathf.Max(0f, healthWest);
 
