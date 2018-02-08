@@ -6,6 +6,7 @@ using Game.Models;
 using Game.Views;
 using UnityEngine;
 using UniRx;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -13,6 +14,8 @@ namespace Game
     {
         public float TickFrequency = 1f;
         public float CombatWidth { get {return Mathf.Log10(_tickCount+10)*10f; } }
+
+        private Coroutine _menuCoroutine;
 
         //Progress -100 means Nation0 lost, Progress 100 means Nation1 lost
         float WarProgress = 0f;
@@ -29,8 +32,8 @@ namespace Game
         private void Awake() {
             DOTween.Init();
             _playerCompany = new Company("Bokcular Inc.");
-            _nation0 = new Nation("Soviets");
-            _nation1 = new Nation("Nazis");
+            _nation0 = new Nation("Team Floating Points");
+            _nation1 = new Nation("Team Integers");
             
             _sim = new WarSim(_nation0, _nation1);
 
@@ -64,15 +67,19 @@ namespace Game
         }
 
         public void QuitButton() {
-
+            if (_menuCoroutine == null)
+                _menuCoroutine = StartCoroutine(DelayedMenuAction(Application.Quit));
         }
 
         public void RestartButton() {
-
+            if (_menuCoroutine == null)
+                _menuCoroutine = StartCoroutine(DelayedMenuAction(
+                    () => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
+                ));
         }
 
         private IEnumerator DelayedMenuAction(Action p_Action) {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.8f);
 
             p_Action.Invoke();
         }
