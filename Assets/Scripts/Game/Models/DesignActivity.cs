@@ -12,7 +12,7 @@ namespace Game.Models
     {
         public Weapon CreatedWeapon { get; private set; }
 
-        public DesignActivity(Weapon design, int designTime) : base(designTime)
+        public DesignActivity(Weapon design, int designTime) : base(designTime, design.GetCost())
         {
             CreatedWeapon = design;
         }

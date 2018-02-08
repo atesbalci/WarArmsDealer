@@ -24,6 +24,10 @@ namespace Game.Views
             col.a = Progress.color.a;
             Progress.color = col;
             _graphics = GetComponentsInChildren<Graphic>(true);
+            if (!(Activity is ResearchActivity))
+            {
+                GetComponent<Button>().onClick.AddListener(() => { Activity.Cancelled = true; });
+            }
 
             //Animation
             transform.localScale = Vector3.one * 2f;
@@ -41,7 +45,8 @@ namespace Game.Views
 
         private void Update()
         {
-            Refresh();
+            if(!Activity.Cancelled)
+                Refresh();
         }
 
         private void Refresh()

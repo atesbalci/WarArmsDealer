@@ -12,7 +12,7 @@ namespace Game.Models
     {
         public Research Research { get; private set; }
 
-        public ResearchActivity(Research research) : base(research.CalculateDuration())
+        public ResearchActivity(Research research) : base(research.CalculateDuration(), research.GetCost())
         {
             Research = research;
         }

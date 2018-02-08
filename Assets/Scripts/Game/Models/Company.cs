@@ -22,7 +22,6 @@ namespace Game.Models
             OldMoney = 2000f;
             Money = new FloatReactiveProperty(OldMoney);
             Name = name;
-            
         }
 
 
@@ -32,6 +31,13 @@ namespace Game.Models
             for (var i = 0; i < Activities.Count; i++)
             {
                 var activity = Activities[i];
+                if (activity.Cancelled)
+                {
+                    Activities.RemoveAt(i);
+                    i--;
+                    Money.Value += activity.RefundAmount;
+                    continue;
+                }
                 Activities[0].Tick();
                 if (activity.RemainingDuration <= 0)
                 {
@@ -39,12 +45,6 @@ namespace Game.Models
                     i--;
                 }
             }
-        }
-
-
-        public void AddResearch(Research research)
-        {
-            Activities.Add(new ResearchActivity(research));
         }
 
         public void AddResearch(ResearchActivity p_ResearchActivity) {
