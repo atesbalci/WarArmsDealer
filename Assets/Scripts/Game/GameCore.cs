@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using DG.Tweening;
 using DG.Tweening.Core;
 using Game.Models;
@@ -60,6 +61,20 @@ namespace Game
             GameView.WarPanelView.Tick();
             _playerCompany.Tick();
             //Debug.Log(WarProgress);
+        }
+
+        public void QuitButton() {
+
+        }
+
+        public void RestartButton() {
+
+        }
+
+        private IEnumerator DelayedMenuAction(Action p_Action) {
+            yield return new WaitForSeconds(1f);
+
+            p_Action.Invoke();
         }
     }
 }
