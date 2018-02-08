@@ -20,8 +20,8 @@ namespace Game.Views {
 
         public void Bind(Company p_Company, WeaponType p_WeaponType, ResearchType p_ResearchType) {
             _researchLevel = transform.Find("ResearchLevel").gameObject;
-            _researchText = transform.Find("ResearchText").GetChild(0).gameObject;
-            _researchCostText = transform.Find("ResearchText").GetChild(1).gameObject;
+            _researchText = transform.Find("ResearchText").Find("Text").gameObject;
+            _researchCostText = transform.Find("ResearchText").Find("Cost").gameObject;
             _researchName = transform.Find("ResearchName").GetChild(0).gameObject;
             _researchText2 = transform.Find("ResearchText2").GetChild(0).gameObject;
 
