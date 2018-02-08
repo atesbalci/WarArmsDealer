@@ -57,7 +57,7 @@ public class WarPanelView : ViewBase {
                         .GetComponent<Text>().text = "Traits : " + traitsString;
 
                 // Casulties part
-                _nationPanels[i].transform.Find("NationCasualtyPanel").Find("CasualtyNumbers").GetChild(j).GetComponent<Text>().text = (_nations[i].Casualities * UnityEngine.Random.Range(1, (3 - j + 2) * 2)).ToString();
+                _nationPanels[i].transform.Find("NationCasualtyPanel").Find("CasualtyNumbers").GetChild(j).GetComponent<Text>().text = Mathf.RoundToInt((_nations[i].Casualities * (3 - j + 2) * 2 * UnityEngine.Random.Range(1f, 1.4f))).ToString();
             }
         }
     }
