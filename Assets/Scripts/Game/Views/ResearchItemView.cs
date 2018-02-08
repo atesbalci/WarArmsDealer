@@ -166,7 +166,7 @@ namespace Game.Views {
                 _researchText.GetComponent<Text>().text = Enum.GetName(typeof(WeaponType), _weaponType); 
                 _researchCostText.GetComponent<Text>().text = "Cost: " + tempResearch.GetCost();
                 _researchName.GetComponent<Text>().text = _company.Tech.ReturnTechName(_researchType,_weaponType, _company.Tech.Weapons[(int)_weaponType].Stats[0].Value + 1);
-                _researchText2.GetComponent<Text>().text = _company.Tech.ReturnTechDesc(_researchType, _weaponType, _company.Tech.Weapons[(int)_weaponType].Stats[0].Value + 1);
+                //_researchText2.GetComponent<Text>().text = _company.Tech.ReturnTechDesc(_researchType, _weaponType, _company.Tech.Weapons[(int)_weaponType].Stats[0].Value + 1);
                 // Set Stat texts of UI
                 /*int lastStatIndex = 0;
                 for (int i = 0; i < 3; i++) {
@@ -187,7 +187,7 @@ namespace Game.Views {
                 _researchText.GetComponent<Text>().text = Enum.GetName(typeof(ResearchType), _researchType);
                 _researchCostText.GetComponent<Text>().text = "Cost: " + (_researchType == ResearchType.Design ? _company.Tech.DesignLevel * 250f : _company.Tech.TechLevel * 250f);
                 _researchName.GetComponent<Text>().text = _company.Tech.ReturnTechName(_researchType, WeaponType.Infantry, _company.Tech.TechLevel);
-                _researchText2.GetComponent<Text>().text = _company.Tech.ReturnTechDesc(_researchType, WeaponType.Infantry, _company.Tech.TechLevel);
+                //_researchText2.GetComponent<Text>().text = _company.Tech.ReturnTechDesc(_researchType, WeaponType.Infantry, _company.Tech.TechLevel);
 
             }
         }
